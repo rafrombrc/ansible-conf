@@ -1,0 +1,22 @@
+---
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Fix /etc/hosts removing the old hostname ipv4
+  ansible.builtin.lineinfile:
+    state=present
+    dest=/etc/hosts
+    line="{{ ansible_default_ipv4.address }} {{ inventory_hostname }}"
+    regexp="^{{ ansible_default_ipv4.address }}"
+  when:
+    ansible_hostname != inventory_hostname
+
+- name: Fix /etc/hosts removing the old hostname ipv6
+  ansible.builtin.lineinfile:
+    state=present
+    dest=/etc/hosts
+    line="{{ ansible_default_ipv6.address }} {{ inventory_hostname }}"
+    regexp="^{{ ansible_default_ipv6.address }}"
+  when:
+    ansible_hostname != inventory_hostname

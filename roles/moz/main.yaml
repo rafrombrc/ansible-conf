@@ -1,0 +1,12 @@
+---
+- name: Configure moz local
+  hosts: localhost
+
+  vars_files:
+    - config.yaml
+
+  tasks:
+    - import_tasks: tasks/update.yaml
+      tags: update
+    - import_tasks: tasks/packages.yaml
+      tags: packages

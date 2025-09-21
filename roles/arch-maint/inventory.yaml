@@ -1,0 +1,19 @@
+arch_pis:
+  hosts:
+    livingroom:
+      ansible_host: livingroom-ans
+    kitchen:
+      ansible_host: kitchen-ans
+    bedroom:
+      ansible_host: bedroom-ans
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
+arch_amd64s:
+  hosts:
+    muse:
+      ansible_host: muse-ans.nonsequitarian.org
+    moz:
+      ansible_host: moz-ans.nonsequitarian.org
+  vars:
+    ansible_python_interpreter: /usr/bin/python

@@ -1,0 +1,36 @@
+---
+- name: Create /run/nginx dir
+  ansible.builtin.file:
+    path: /run/nginx
+    state: directory
+    mode: 0755
+
+- name: Create /var/www dir
+  ansible.builtin.file:
+    path: /var/www
+    state: directory
+    mode: 0755
+
+- name: Create /run/anubis dir
+  ansible.builtin.file:
+    path: /run/anubis/nginx
+    state: directory
+    mode: 0755
+
+- name: Copy anubis nginx.env file
+  ansible.builtin.copy:
+    src: anubis/nginx.env
+    dest: /etc/anubis/nginx.env
+    mode: 0644
+
+- name: Copy anubis nginx botPolicies file
+  ansible.builtin.copy:
+    src: anubis/nginx.botPolicies.yaml
+    dest: /etc/anubis/nginx.botPolicies.yaml
+    mode: 0644
+
+- name: Activate anubis systemd service
+  ansible.builtin.systemd_service:
+    name: anubis@nginx.service
+    enabled: true
+    state: started

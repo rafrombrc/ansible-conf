@@ -1,0 +1,65 @@
+---
+base_packages:
+  - base
+  - base-devel
+  - linux
+  - linux-firmware
+  - sudo
+  - openssh
+  - man-db
+  - man-pages
+  - git
+  - wget
+  - reflector
+  - python
+  - python-pip
+
+other_packages:
+  - bash-completion
+  - polkit
+  - vim
+  - tailscale
+  - rsync
+  - emacs
+  - rust
+  - python-virtualenvwrapper
+  - kwalletmanager
+  - thunderbird
+  - signal-desktop
+  - zsh
+  - xdotool
+  - plasma-x11-session
+  - five-or-more
+  - mesa-demos
+  - vulkan-radeon
+  - vlc
+  - vlc-plugin-ffmpeg
+  - vlc-plugin-x264
+  - iperf
+  - network-manager-applet
+
+niri_packages:
+  - niri
+  - waybar
+  - swaylock
+  - swaybg
+  - swayidle
+  - fuzzel
+  - xwayland-satellite
+  - xdg-desktop-portal-gtk
+  - xdg-desktop-portal-gnome
+
+aur_packages:
+  - paru
+  - zoom
+  - cable
+  - firefox-nightly-bin
+  - signalbackup-tools-git
+  - octopi
+  - electron19-bin
+  - google-messages-bin
+
+
+niri_aur_packages:
+  - niriswitcher
+  - niri-session-manager

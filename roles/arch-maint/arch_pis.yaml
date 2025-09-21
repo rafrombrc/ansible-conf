@@ -1,0 +1,14 @@
+---
+- name: Utilities for arch_pis.
+  hosts: arch_pis
+
+  vars_files:
+    - config.yaml
+
+  tasks:
+    - import_tasks: tasks/ping.yaml
+      tags: ping-pis
+    - import_tasks: tasks/update.yaml
+      tags: update-pis
+    - import_tasks: tasks/restart.yaml
+      tags: restart-pis

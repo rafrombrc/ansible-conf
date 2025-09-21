@@ -1,0 +1,44 @@
+---
+- name: Copy immich dir
+  become: true
+  become_user: pods
+  ansible.builtin.copy:
+    src: immich/immich
+    dest: /home/pods
+
+- name: Template immich .env file
+  become: true
+  become_user: pods
+  ansible.builtin.template:
+    src: immich/env.j2
+    dest: /home/pods/immich/.env
+    mode: 0600
+
+- name: Copy immich.service file
+  become: true
+  become_user: pods
+  ansible.builtin.copy:
+    src: immich/immich.service
+    dest: /home/pods/.config/systemd/user/immich.service
+    mode: 0644
+
+- name: Get pods user uid
+  ansible.builtin.getent:
+    database: passwd
+    key: pods
+
+- name: Store pods uid for later use
+  ansible.builtin.set_fact:
+    podsuid: "{{ getent_passwd['pods'][1] }}"
+
+- name: Activate immich systemd service
+  become: true
+  become_user: pods
+  ansible.builtin.systemd_service:
+    name: immich.service
+    state: started
+    daemon-reload: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+

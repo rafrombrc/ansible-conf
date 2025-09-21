@@ -1,0 +1,28 @@
+---
+- name: Add `pods` user
+  ansible.builtin.user:
+    name: pods
+    shell: /usr/bin/bash
+    home: /home/pods
+    password_lock: true
+
+- name: Create systemd/user dir
+  become: yes
+  become_user: pods
+  ansible.builtin.file:
+    path: /home/pods/.config/systemd/user
+    state: directory
+
+- name: Enable Linger for pods user
+  ansible.builtin.command:
+    argv:
+    - /usr/bin/loginctl
+    - enable-linger
+    - pods
+    creates: "/var/lib/systemd/linger/pods"
+
+- name: Set color prompt
+  ansible.builtin.lineinfile:
+    path: /home/pods/.bashrc
+    regexp: '^PS1=\\u'
+    line: PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '

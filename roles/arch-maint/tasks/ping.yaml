@@ -1,0 +1,3 @@
+---
+- name: Ping all machines
+  ansible.builtin.ping:

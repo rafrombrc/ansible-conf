@@ -1,0 +1,36 @@
+---
+- name: Copy searxng-docker dir
+  become: true
+  become_user: pods
+  ansible.builtin.copy:
+    src: searxng/searxng-docker
+    dest: /home/pods
+
+- name: Copy searxng.service file
+  become: true
+  become_user: pods
+  ansible.builtin.copy:
+    src: searxng/searxng.service
+    dest: /home/pods/.config/systemd/user/searxng.service
+    mode: 0644
+
+- name: Get pods user uid
+  ansible.builtin.getent:
+    database: passwd
+    key: pods
+
+- name: Store pods uid for later use
+  ansible.builtin.set_fact:
+    podsuid: "{{ getent_passwd['pods'][1] }}"
+
+- name: Activate searxng systemd service
+  become: true
+  become_user: pods
+  ansible.builtin.systemd_service:
+    name: searxng.service
+    state: started
+    daemon-reload: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+

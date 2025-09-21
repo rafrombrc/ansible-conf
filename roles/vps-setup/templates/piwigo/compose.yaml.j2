@@ -1,0 +1,36 @@
+---
+version: "3"
+services:
+  piwigo:
+    image: lscr.io/linuxserver/piwigo:latest
+    container_name: piwigo
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los Angeles
+    volumes:
+      - ./piwigo/config:/config
+      - ./piwigo/gallery:/gallery
+    ports:
+      - 8081:80
+    networks:
+      - piwigo
+    restart: unless-stopped
+
+  mysql:
+    container_name: piwigo_mysql
+    image: docker.io/mysql:8.0.18
+    command: ["--default-authentication-plugin=mysql_native_password"]
+    networks:
+      - piwigo
+    environment:
+      MYSQL_USER: "piwigo"
+      MYSQL_PASSWORD: "{{ piwigo_db_password }}"
+      MYSQL_DATABASE: "piwigo"
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+    volumes:
+      - ./piwigo-mysql/mysql:/var/lib/mysql
+    restart: unless-stopped
+
+networks:
+  piwigo:

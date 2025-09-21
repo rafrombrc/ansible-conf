@@ -1,0 +1,13 @@
+---
+- name: Install base packages
+  become: true
+  community.general.pacman:
+    name: "{{ base_packages }}"
+    state: present
+  changed_when: false
+
+- name: Install other packages
+  become: true
+  community.general.pacman:
+    name: "{{ other_packages }}"
+    state: present

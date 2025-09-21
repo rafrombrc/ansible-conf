@@ -1,0 +1,51 @@
+---
+- name: Create my-ente compose folder
+  become: true
+  become_user: pods
+  ansible.builtin.file:
+    path: /home/pods/my-ente
+    state: directory
+
+- name: Template my-ente compose.yaml file
+  become: true
+  become_user: pods
+  ansible.builtin.template:
+    src: ente/compose.yaml.j2
+    dest: /home/pods/my-ente/compose.yaml
+    mode: 0600
+
+- name: Template my-ente museum.yaml file
+  become: true
+  become_user: pods
+  ansible.builtin.template:
+    src: ente/museum.yaml.j2
+    dest: /home/pods/my-ente/museum.yaml
+    mode: 0600
+
+- name: Copy my-ente.service file
+  become: true
+  become_user: pods
+  ansible.builtin.copy:
+    src: ente/my-ente.service
+    dest: /home/pods/.config/systemd/user/my-ente.service
+    mode: 0644
+
+- name: Get pods user uid
+  ansible.builtin.getent:
+    database: passwd
+    key: pods
+
+- name: Store pods uid for later use
+  ansible.builtin.set_fact:
+    podsuid: "{{ getent_passwd['pods'][1] }}"
+
+- name: Activate my-ente systemd service
+  become: true
+  become_user: pods
+  ansible.builtin.systemd_service:
+    name: my-ente.service
+    state: started
+    daemon-reload: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"

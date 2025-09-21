@@ -1,0 +1,17 @@
+[Unit]
+Description=ente via podman compose
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+WorkingDirectory=%h/my-ente
+Type=simple
+Restart=always
+TimeoutStartSec=60
+TimeoutStopSec=60
+ExecStart=/usr/bin/podman-compose up --remove-orphans
+ExecStop=/usr/bin/podman-compose down
+
+[Install]
+WantedBy=default.target
+

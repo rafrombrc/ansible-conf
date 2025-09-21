@@ -1,0 +1,7 @@
+vps:
+  hosts:
+    non0:
+      ansible_host: non0-ans.nonsequitarian.org
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+

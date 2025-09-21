@@ -1,0 +1,5 @@
+---
+- name: Update package cache
+  pacman:
+    update_cache: true
+  changed_when: false

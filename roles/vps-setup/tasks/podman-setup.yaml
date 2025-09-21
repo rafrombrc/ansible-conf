@@ -1,0 +1,12 @@
+---
+- name: Set setuid cap for newuidmap
+  community.general.capabilities:
+    path: /usr/bin/newuidmap
+    capability: cap_setuid=ep
+    state: present
+
+- name: Set setgid cap for newgidmap
+  community.general.capabilities:
+    path: /usr/bin/newgidmap
+    capability: cap_setgid=ep
+    state: present
