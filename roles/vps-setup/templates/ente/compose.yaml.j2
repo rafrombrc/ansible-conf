@@ -15,10 +15,10 @@ services:
       timeout: 5s
       retries: 3
       start_period: 5s
-    environment:
-      ENTE_S3_ENDPOINT_OVERRIDE: https://minio.nonsequitarian.org
+  #  environment:
+  #    ENTE_S3_ENDPOINT_OVERRIDE: https://minio.nonsequitarian.org
     extra_hosts:
-      - "minio.nonsequitarian.org:10.124.0.3"
+      - "minio.nonsequitarian.org:169.254.1.2"
 
   # Resolve "localhost:3200" in the museum container to the minio container.
   #socat:

@@ -28,6 +28,8 @@ other_packages:
   - rsync
   - hugo
   - bc
+  - znc
+  - locate
 
 services_list:
   - sshd
