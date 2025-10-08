@@ -1,0 +1,7 @@
+home_server:
+  hosts:
+    livingroom:
+      ansible_host: livingroom-ans
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+
