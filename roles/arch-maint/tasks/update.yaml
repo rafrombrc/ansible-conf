@@ -1,14 +1,7 @@
 ---
-- name: Update package cache
-  become: true
-  community.general.pacman:
-    update_cache: true
-  changed_when: false
-
 - name: Update all packages
   become: true
   community.general.pacman:
+    update_cache: true
     upgrade: true
     state: present
-  changed_when: false
-  when: update | default(false) | bool
