@@ -3,7 +3,7 @@
   become: true
   become_user: pods
   ansible.builtin.file:
-    path: /home/pods/my-ente
+    path: /home/pods/my-ente/pg_dump
     state: directory
 
 - name: Template my-ente compose.yaml file
@@ -30,6 +30,22 @@
     dest: /home/pods/.config/systemd/user/my-ente.service
     mode: 0644
 
+- name: Copy pg_backup-ente.timer file
+  become: true
+  become_user: pods
+  ansible.builtin.copy:
+    src: ente/pg-backup-ente.timer
+    dest: /home/pods/.config/systemd/user/pg-backup-ente.timer
+    mode: 0644
+
+- name: Copy pg_backup-ente.service file
+  become: true
+  become_user: pods
+  ansible.builtin.copy:
+    src: ente/pg-backup-ente.service
+    dest: /home/pods/.config/systemd/user/pg-backup-ente.service
+    mode: 0644
+
 - name: Get pods user uid
   ansible.builtin.getent:
     database: passwd
@@ -44,6 +60,17 @@
   become_user: pods
   ansible.builtin.systemd_service:
     name: my-ente.service
+    state: started
+    daemon-reload: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Activate pg-backup-ente.timer systemd timer
+  become: true
+  become_user: pods
+  ansible.builtin.systemd_service:
+    name: pg-backup-ente.timer
     state: started
     daemon-reload: true
     scope: user

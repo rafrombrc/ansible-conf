@@ -1,0 +1,8 @@
+[Unit]
+Description=PostgreSQL Backup for ente
+Requires=my-ente.service
+
+[Service]
+ExecStart=/usr/bin/sh -c "podman exec my-ente_postgres_1 pg_dump -U pguser ente_db | gzip > %h/my-ente/pg_dump/ente_db-$(date +%%Y%%m%%d).sql.gz"
+ExecStartPost=find %h/my-ente/pg_dump -type f -mtime +10 -exec rm {} \;
+Type=oneshot
