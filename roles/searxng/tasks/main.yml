@@ -1,0 +1,27 @@
+---
+- name: Import podsuid role
+  import_role:
+    name: podsuid
+
+- name: Copy searxng-docker dir
+  ansible.builtin.copy:
+    src: searxng-docker
+    dest: /home/pods
+  notify: Restart searxng systemd service
+
+- name: Copy searxng.service file
+  ansible.builtin.copy:
+    src: searxng.service
+    dest: /home/pods/.config/systemd/user/searxng.service
+    mode: 0644
+  notify:
+    - Reload pods user systemd config
+    - Restart searxng systemd service
+
+- name: Enable searxng systemd service
+  ansible.builtin.systemd_service:
+    name: searxng.service
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"

@@ -1,0 +1,22 @@
+---
+- name: Install podman package
+  community.general.pacman:
+    name: podman
+    state: present
+
+- name: Install podman-compose package
+  community.general.pacman:
+    name: podman-compose
+    state: present
+
+- name: Set setuid cap for newuidmap
+  community.general.capabilities:
+    path: /usr/bin/newuidmap
+    capability: cap_setuid=ep
+    state: present
+
+- name: Set setgid cap for newgidmap
+  community.general.capabilities:
+    path: /usr/bin/newgidmap
+    capability: cap_setgid=ep
+    state: present

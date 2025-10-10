@@ -1,0 +1,42 @@
+all:
+  hosts:
+    livingroom:
+      ansible_host: livingroom-ans
+    kitchen:
+      ansible_host: kitchen-ans
+    bedroom:
+      ansible_host: bedroom-ans
+    muse:
+      ansible_host: muse-ans.nonsequitarian.org
+    moz:
+      ansible_host: moz-ans.nonsequitarian.org
+    non0:
+      ansible_host: non0-ans.nonsequitarian.org
+
+  children:
+    home_pi_clients:
+      hosts:
+        livingroom:
+        kitchen:
+        bedroom:
+      vars:
+        ansible_python_interpreter: /usr/bin/python
+
+    home_pi_server:
+      hosts:
+        livingroom:
+      vars:
+        ansible_python_interpreter: /usr/bin/python
+
+    home_amd64s:
+      hosts:
+        muse:
+        moz:
+      vars:
+        ansible_python_interpreter: /usr/bin/python
+
+    vps:
+      hosts:
+        non0:
+      vars:
+        ansible_python_interpreter: /usr/bin/python

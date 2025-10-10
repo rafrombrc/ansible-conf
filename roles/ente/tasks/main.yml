@@ -1,0 +1,62 @@
+---
+- name: Import podsuid role
+  import_role:
+    name: podsuid
+
+- name: Create my-ente compose folder
+  ansible.builtin.file:
+    path: /home/pods/my-ente/pg_dump
+    state: directory
+
+- name: Template my-ente compose.yaml file
+  ansible.builtin.template:
+    src: compose.yaml.j2
+    dest: /home/pods/my-ente/compose.yaml
+    mode: 0600
+
+- name: Template my-ente museum.yaml file
+  ansible.builtin.template:
+    src: museum.yaml.j2
+    dest: /home/pods/my-ente/museum.yaml
+    mode: 0600
+
+- name: Copy my-ente.service file
+  ansible.builtin.copy:
+    src: my-ente.service
+    dest: /home/pods/.config/systemd/user/my-ente.service
+    mode: 0644
+  notify:
+    - Reload pods user systemd config
+    - Restart ente systemd service
+
+- name: Copy pg_backup-ente.timer file
+  ansible.builtin.copy:
+    src: pg-backup-ente.timer
+    dest: /home/pods/.config/systemd/user/pg-backup-ente.timer
+    mode: 0644
+  notify:
+    - Reload pods user systemd config
+    - Restart pg_backup-ente systemd timer
+
+- name: Copy pg_backup-ente.service file
+  ansible.builtin.copy:
+    src: pg-backup-ente.service
+    dest: /home/pods/.config/systemd/user/pg-backup-ente.service
+    mode: 0644
+  notify: Reload pods user systemd config
+
+- name: Enable ente systemd service
+  ansible.builtin.systemd_service:
+    name: my-ente.service
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Enable pg-backup-ente.timer systemd timer
+  ansible.builtin.systemd_service:
+    name: pg-backup-ente.timer
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"

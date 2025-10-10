@@ -1,0 +1,33 @@
+---
+- name: Import podsuid role
+  import_role:
+    name: podsuid
+
+- name: Copy immich dir
+  ansible.builtin.copy:
+    src: immich
+    dest: /home/pods
+  notify: Restart immich systemd service
+
+- name: Template immich .env file
+  ansible.builtin.template:
+    src: env.j2
+    dest: /home/pods/immich/.env
+    mode: 0600
+
+- name: Copy immich.service file
+  ansible.builtin.copy:
+    src: immich.service
+    dest: /home/pods/.config/systemd/user/immich.service
+    mode: 0644
+  notify:
+    - Reload pods user systemd config
+    - Restart immich systemd service
+
+- name: Enable immich systemd service
+  ansible.builtin.systemd_service:
+    name: immich.service
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"

@@ -1,0 +1,9 @@
+---
+# handlers file for ente
+- name: Restart ente systemd service
+  ansible.builtin.systemd_service:
+    name: my-ente.service
+    state: restarted
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"

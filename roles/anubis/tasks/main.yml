@@ -1,0 +1,40 @@
+---
+# tasks file for anubis
+- name: Install anubis package
+  community.general.pacman:
+    name: anubis
+    state: present
+
+- name: Copy anubis nginx.env file
+  ansible.builtin.copy:
+    src: nginx.env
+    dest: /etc/anubis/nginx.env
+    mode: 0644
+  notify: Restart anubis service
+
+- name: Copy nginx.botPolicies.yaml file
+  ansible.builtin.copy:
+    src: nginx.botPolicies.yaml
+    dest: /etc/anubis/nginx.botPolicies.yaml
+    mode: 0644
+  notify: Restart anubis service
+
+- name: Copy conf-anubis.inc file
+  ansible.builtin.copy:
+    src: conf-anubis.inc
+    dest: /etc/nginx/includes/conf-anubis.inc
+    mode: 0644
+  notify: Restart nginx service
+
+- name: Copy upstream-anubis.conf file
+  ansible.builtin.copy:
+    src: upstream-anubis.conf
+    dest: /etc/nginx/conf.d/upstream-anubis.conf
+    mode: 0644
+  notify: Restart nginx service
+
+- name: Activate anubis systemd service
+  ansible.builtin.systemd_service:
+    name: anubis@nginx.service
+    enabled: true
+    state: started

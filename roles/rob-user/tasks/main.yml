@@ -1,0 +1,62 @@
+---
+- name: Add rob user
+  ansible.builtin.user:
+    name: rob
+    shell: /usr/bin/bash
+    home: /home/rob
+    password: "{{ rob_password }}"
+    groups:
+      - sudo
+      - wheel
+
+- name: Create .ssh dir
+  ansible.builtin.file:
+    path: /home/rob/.ssh
+    state: directory
+    owner: rob
+    group: rob
+    mode: 0700
+
+- name: Acquire local ssh public key
+  ansible.builtin.set_fact:
+    ssh_pub_key: "{{ lookup('file','/home/rob/.ssh/id_ed25519.pub') }}"
+
+- name: Add ssh key to authorized_keys
+  ansible.builtin.lineinfile:
+    dest: /home/rob/.ssh/authorized_keys
+    line: "{{ ssh_pub_key }}"
+    owner: rob
+    group: rob
+    create: true
+
+- name: Create bin dir
+  ansible.builtin.file:
+    path: /home/rob/bin
+    state: directory
+    owner: rob
+    group: rob
+
+- name: Add $HOME/bin dir to $PATH
+  ansible.builtin.lineinfile:
+    dest: /home/rob/.bash_profile
+    line: "PATH=/home/rob/bin:$PATH"
+    owner: rob
+    group: rob
+    create: true
+
+- name: Copy pods command
+  ansible.builtin.copy:
+    src: pods
+    dest: /home/rob/bin/pods
+    mode: 0744
+    force: false
+    owner: rob
+    group: rob
+
+- name: Set color prompt
+  ansible.builtin.lineinfile:
+    path: /home/rob/.bashrc
+    regexp: '^PS1='
+    line: PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    owner: rob
+    group: rob

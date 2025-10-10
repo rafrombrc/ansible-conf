@@ -1,0 +1,9 @@
+---
+# tasks file for podman
+- name: Set up pods user
+  import_tasks: pods-user.yml
+  become: true
+
+- name: Set up podman
+  import_tasks: podman-setup.yml
+  become: true

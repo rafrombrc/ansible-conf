@@ -1,0 +1,9 @@
+---
+# handlers file for searxng
+- name: Restart searxng systemd service
+  ansible.builtin.systemd_service:
+    name: searxng.service
+    state: restarted
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"

@@ -1,0 +1,9 @@
+---
+# handlers file for immich
+- name: Restart immich systemd service
+  ansible.builtin.systemd_service:
+    name: immich.service
+    state: restarted
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"

@@ -1,0 +1,43 @@
+---
+- hosts: vps
+  vars_files:
+    - vars/vps-vault.yml
+
+  roles:
+    - role: rob-user
+      become: true
+      tags: rob-user
+
+    - role: nginx
+      become: true
+      vars:
+        conf_file: vps.nginx.conf
+      tags: nginx
+
+    - role: anubis
+      become: true
+      tags: anubis
+
+    - role: podman
+      become: true
+      tags: podman
+
+    - role: piwigo
+      become: true
+      become_user: pods
+      tags: piwigo
+
+    - role: searxng
+      become: true
+      become_user: pods
+      tags: searxng
+
+    - role: immich
+      become: true
+      become_user: pods
+      tags: immich
+
+    - role: ente
+      become: true
+      become_user: pods
+      tags: ente

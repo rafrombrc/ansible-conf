@@ -1,0 +1,4 @@
+---
+- hosts: home-pi-clients
+  roles:
+    - arch-maint

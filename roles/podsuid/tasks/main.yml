@@ -1,0 +1,10 @@
+---
+- name: Get pods user uid
+  ansible.builtin.getent:
+    database: passwd
+    key: pods
+
+- name: Store pods uid for later use
+  ansible.builtin.set_fact:
+    podsuid: "{{ getent_passwd['pods'][1] }}"
+
