@@ -1,0 +1,11 @@
+---
+- name: Generate hugo site
+  ansible.builtin.command:
+    cmd: hugo
+    chdir: "{{ repos_dir }}/{{ role_args.dir_name }}"
+  when: role_args.dir_name == "wedding"
+
+- name: Deploy hugo site
+  become: true
+  ansible.builtin.command:
+    cmd: rsync -r {{ repos_dir }}/{{ role_args.dir_name }}/public/ {{ www_dir }}/{{ role_args.dir_name }}

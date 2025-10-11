@@ -1,0 +1,12 @@
+---
+# global handlers file
+- name: Reboot host
+  become: true
+  ansible.builtin.reboot:
+  tags: reboot
+
+- name: Restart nginx service
+  become: true
+  ansible.builtin.systemd_service:
+    name: nginx.service
+    state: restarted

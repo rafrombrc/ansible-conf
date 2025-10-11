@@ -1,0 +1,37 @@
+---
+- hosts: home_server
+
+  handlers:
+    - import_tasks: handlers.yml
+
+  roles:
+    - role: swapfile
+      become: true
+      tags: swapfile
+
+    - role: set-hostname
+      become: true
+      tags: set-hostname
+
+    - role: sudoers
+      become: true
+      tags: sudoers
+
+    - role: rob-user
+      become: true
+      tags: rob-user
+
+    - role: nginx
+      become: true
+      vars:
+        conf_file: vps.nginx.conf
+      tags: nginx
+
+    - role: podman
+      become: true
+      tags: podman
+
+    - role: music-assistant
+      become: true
+      become_user: pods
+      tags: music-assistant

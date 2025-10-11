@@ -1,0 +1,33 @@
+---
+- name: Check for {{ repos_dir }} folder
+  ansible.builtin.file:
+    path: "{{ repos_dir }}"
+    state: directory
+
+- name: Checkout hugo git repo - {{ role_args.dir_name }}
+  ansible.builtin.git:
+    repo: "{{ role_args.repo_url }}"
+    dest: "{{ repos_dir }}/{{ role_args.dir_name }}"
+    key_file: /home/rob/.ssh/github_key
+    accept_newhostkey: true
+  notify:
+    - Generate hugo site
+    - Deploy hugo site
+
+- name: Check for {{ role_args.dir_name }}/public folder
+  ansible.builtin.file:
+    path: "{{ repos_dir }}/{{ role_args.dir_name }}/public"
+    state: directory
+  notify:
+    - Generate hugo site
+    - Deploy hugo site
+
+- name: Template {{ role_args.dir_name }} nginx config
+  become: true
+  ansible.builtin.template:
+    src: hugo-nginx.conf.j2
+    dest: /etc/nginx/sites.d/{{ role_args.server_name }}
+  vars:
+    d: "{{ role_args }}"
+  notify:
+    - Restart nginx service

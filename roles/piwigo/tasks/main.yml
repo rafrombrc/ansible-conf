@@ -31,3 +31,12 @@
     scope: user
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Place piwigo nginx config
+  become: true
+  become_user: root
+  ansible.builtin.copy:
+    src: photos.nonsequitarian.org
+    dest: /etc/nginx/sites.d/photos.nonsequitarian.org
+    mode: 0644
+  notify: Restart nginx service

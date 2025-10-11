@@ -1,0 +1,7 @@
+---
+- name: Loop a role
+  ansible.builtin.include_role:
+    name: "{{ inner_role }}"
+  loop: "{{ inner_role_args }}"
+  vars:
+    role_args: "{{ item }}"

@@ -1,0 +1,56 @@
+---
+swapfile_path: /swapfile
+swapfile_size: 8G
+
+base_packages:
+  - base
+  - base-devel
+  - linux
+  - linux-firmware
+  - sudo
+  - openssh
+  - man-db
+  - man-pages
+  - git
+  - wget
+  - reflector
+
+other_packages:
+  - bash-completion
+  - polkit
+  - vi
+  - nginx
+  - anubis
+  - podman
+  - podman-compose
+  - tailscale
+  - rsync
+  - hugo
+  - bc
+  - znc
+  - locate
+
+dev_packages:
+  - python
+  - python-pip
+
+hugo_sites:
+  - dir_name: accompaniment
+    repo_url: git@github.com:rafrombrc/accompaniment.git
+    server_name: accompanimentcoaching.com
+    redirects:
+      - www.accompanimentcoaching.com
+
+  - dir_name: nonsequitarian
+    repo_url: git@github.com:rafrombrc/nonsequitarian.git
+    server_name: nonsequitarian.org
+    redirects:
+      - www.nonsequitarian.org
+    locations_template: nonseq_locations.j2
+
+  - dir_name: wedding
+    repo_url: git@github.com:rafrombrc/wedding-site.git
+    server_name: wedding.nonsequitarian.org
+    cert_name: nonsequitarian.org
+
+www_dir: /var/www

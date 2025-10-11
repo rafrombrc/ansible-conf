@@ -22,7 +22,7 @@ all:
       vars:
         ansible_python_interpreter: /usr/bin/python
 
-    home_pi_server:
+    home_server:
       hosts:
         livingroom:
       vars:

@@ -1,6 +1,0 @@
----
-- name: Install other packages
-  become: true
-  community.general.pacman:
-    name: "{{ other_packages }}"
-    state: present

@@ -1,9 +1,24 @@
 ---
 - hosts: vps
   vars_files:
-    - vars/vps-vault.yml
+    - config/vps.yml
+    - config/vps-vault.yml
+  handlers:
+    - import_tasks: handlers.yml
 
   roles:
+    - role: swapfile
+      become: true
+      tags: swapfile
+
+    - role: set-hostname
+      become: true
+      tags: set-hostname
+
+    - role: sudoers
+      become: true
+      tags: sudoers
+
     - role: rob-user
       become: true
       tags: rob-user
@@ -41,3 +56,10 @@
       become: true
       become_user: pods
       tags: ente
+
+    - role: loop-role
+      vars:
+        inner_role: hugo-sites
+        inner_role_args: "{{ hugo_sites }}"
+        repos_dir: /home/rob/src/www
+      tags: hugo-sites

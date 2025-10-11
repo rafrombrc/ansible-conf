@@ -60,3 +60,12 @@
     scope: user
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Place ente nginx config
+  become: true
+  become_user: root
+  ansible.builtin.copy:
+    src: ente.nonsequitarian.org
+    dest: /etc/nginx/sites.d/ente.nonsequitarian.org
+    mode: 0644
+  notify: Restart nginx service
