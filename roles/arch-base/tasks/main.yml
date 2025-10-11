@@ -1,18 +1,51 @@
 ---
 - name: Install base packages
-  become: true
   community.general.pacman:
     name: "{{ base_packages }}"
     state: present
 
 - name: Install other packages
-  become: true
   community.general.pacman:
     name: "{{ other_packages }}"
     state: present
 
 - name: Install dev packages
-  become: true
   community.general.pacman:
     name: "{{ dev_packages }}"
+    state: present
+
+- name: Create the aur_builder user
+  ansible.builtin.user:
+    name: aur_builder
+    create_home: yes
+
+- name: Allow aur_builder user to run `sudo pacman` w/o password
+  community.general.sudoers:
+    name: aur_builder
+    user: aur_builder
+    nopassword: true
+    commands: /usr/bin/pacman
+
+- name: Allow sudo group to sudo as aur_builder
+  community.general.sudoers:
+    name: sudo-do-as-aur_builder
+    state: present
+    group: sudo
+    runas: aur_builder
+    commands: ALL
+
+- name: Install paru-bin
+  become: true
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    name: paru-bin
+    use: makepkg
+    state: present
+
+- name: Install aur packages
+  become: true
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: paru
+    name: "{{ aur_packages }}"
     state: present

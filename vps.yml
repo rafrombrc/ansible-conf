@@ -23,6 +23,10 @@
       become: true
       tags: rob-user
 
+    - role: arch-base
+      become: true
+      tags: arch-base
+
     - role: nginx
       become: true
       vars:

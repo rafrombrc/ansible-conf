@@ -13,7 +13,6 @@ base_packages:
   - man-pages
   - git
   - wget
-  - reflector
 
 other_packages:
   - bash-completion
@@ -28,3 +27,17 @@ other_packages:
 
 dev_packages:
   - python
+
+aur_packages:
+  - adduser
+  - libtremor-git
+  - mopidy-internetarchive
+  - mopidy-iris
+  - mopidy-local
+  - mopidy-musicbox
+  - mopidy-qsaver-git
+  - python-cachetools
+  - python-mopidy-tidal
+  - python-ratelimit
+  - python-uritools
+  - snapcast
