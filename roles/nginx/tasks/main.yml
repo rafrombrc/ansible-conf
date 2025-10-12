@@ -9,16 +9,19 @@
   ansible.builtin.file:
     path: /etc/nginx/conf.d
     mode: 0755
+    state: directory
 
 - name: Create sites.d dir
   ansible.builtin.file:
     path: /etc/nginx/sites.d
     mode: 0755
+    state: directory
 
 - name: Create includes dir
   ansible.builtin.file:
     path: /etc/nginx/includes
     mode: 0755
+    state: directory
 
 - name: Copy nginx.conf file
   ansible.builtin.copy:
