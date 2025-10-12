@@ -49,3 +49,4 @@
     use: paru
     name: "{{ aur_packages }}"
     state: present
+  when: aur_packages is defined

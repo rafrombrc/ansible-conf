@@ -2,6 +2,7 @@
 - hosts: home_server
   vars_files:
     - config/home-server.yml
+    - config/home-server-vault.yml
   handlers:
     - import_tasks: handlers.yml
 
@@ -26,10 +27,15 @@
       become: true
       tags: arch-base
 
+    - role: pkgbuilds
+      become: true
+      become_user: aur_builder
+      tags: pkgbuilds
+
     - role: nginx
       become: true
       vars:
-        conf_file: vps.nginx.conf
+        conf_file: home-server.nginx.conf
       tags: nginx
 
     - role: podman

@@ -37,7 +37,13 @@ aur_packages:
   - mopidy-musicbox
   - mopidy-qsaver-git
   - python-cachetools
-  - python-mopidy-tidal
   - python-ratelimit
   - python-uritools
   - snapcast
+
+pkgbuild_packages:
+  - python-mopidy-mobile
+  - python-mopidy-tidal-git
+  - python-mopidy-tidallp-git
+  - python-tidalapi-git
+  
