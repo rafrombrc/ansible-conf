@@ -15,8 +15,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 5s
-  #  environment:
-  #    ENTE_S3_ENDPOINT_OVERRIDE: https://minio.nonsequitarian.org
+    environment:
+      GIN_MODE: release
     extra_hosts:
       - "minio.nonsequitarian.org:169.254.1.2"
 
