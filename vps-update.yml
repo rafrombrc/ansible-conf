@@ -1,0 +1,9 @@
+---
+- hosts: vps
+  handlers:
+    - import_tasks: handlers.yml
+
+  roles:
+    role: arch-update
+    become: true
+    tags: update
