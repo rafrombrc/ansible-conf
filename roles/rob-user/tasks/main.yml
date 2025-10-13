@@ -61,6 +61,7 @@
     force: false
     owner: rob
     group: rob
+  when: podman_apps is defined
 
 - name: Set color prompt
   ansible.builtin.lineinfile:

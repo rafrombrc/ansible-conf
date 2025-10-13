@@ -31,3 +31,4 @@
       become: true
       become_user: aur_builder
       tags: pkgbuilds
+      when: pkgbuild_packages is defined
