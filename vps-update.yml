@@ -1,9 +1,19 @@
 ---
 - hosts: vps
+  vars_files:
+    - config/vps.yml
   handlers:
-    - import_tasks: handlers.yml
+    - import_tasks: handlers/main.yml
 
   roles:
-    role: arch-update
-    become: true
-    tags: update
+    - role: arch-update
+      become: true
+      tags: arch-update
+
+    - role: loop-role
+      become: true
+      become_user: pods
+      vars:
+        inner_role: pods-update
+        inner_role_args: "{{ podman_apps }}"
+      tags: pods-update

@@ -1,0 +1,11 @@
+---
+- name: podman-compose pull {{ role_args.role_name }}
+  ansible.builtin.command: podman compose pull
+  args:
+    chdir: /home/pods/{{ role_args.dir_name }}
+
+- name: podman-compose up {{ role_args.role_name }}
+  ansible.builtin.command: podman compose up -d
+  args:
+    chdir: /home/pods/{{ role_args.dir_name }}
+

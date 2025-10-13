@@ -34,6 +34,16 @@ dev_packages:
   - python
   - python-pip
 
+podman_apps:
+  - role_name: piwigo
+    dir_name: piwigo
+  - role_name: immich
+    dir_name: immich
+  - role_name: ente
+    dir_name: my-ente
+  - role_name: searxng
+    dir_name: searxng-docker
+
 hugo_sites:
   - dir_name: accompaniment
     repo_url: git@github.com:rafrombrc/accompaniment.git

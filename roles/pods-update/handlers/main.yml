@@ -1,0 +1,5 @@
+---
+- name: podman-compose up
+  ansible.builtin.command: podman-compose up -d
+  args:
+    chdir: /home/pods/{{ role_args.dir_name }}
