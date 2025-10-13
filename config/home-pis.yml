@@ -1,0 +1,26 @@
+---
+swapfile_path: /swapfile
+swapfile_size: 2G
+
+base_packages:
+  - base
+  - base-devel
+  - linux
+  - linux-firmware
+  - sudo
+  - openssh
+  - git
+  - wget
+
+other_packages:
+  - bash-completion
+  - polkit
+  - vim
+  - rsync
+  - locate
+
+dev_packages:
+  - python
+
+aur_packages:
+  - vi-vim-symlink
