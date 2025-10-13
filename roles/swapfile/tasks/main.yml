@@ -1,42 +1,55 @@
 ---
 - name: Check if swap file exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ swapfile_path }}"
   register: swapfile_stat
 
+- name: Check if swap partition exists
+  ansible.builtin.lineinfile:
+    name: /etc/fstab
+    line: '^[^#].*swap.*'
+    state: present
+  check_mode: true
+  register: conf
+
+- name: Set fact for swapfile needed
+  ansible.builtin.set_fact:
+    swapfile_needed: true
+  when: (not swapfile_stat.stat.exists) and ((conf is changed) or (conf is failed))
+
 - name: Set default swap size if not specified
-  set_fact:
+  ansible.builtin.set_fact:
     swapfile_size: 8G
-  when: not swapfile_size
+  when: swapfile_needed and (not swapfile_size)
 
 - name: Set default swap path if not specified
-  set_fact:
+  ansible.builtin.set_fact:
     swapfile_path: /swapfile
-  when: not swapfile_path
+  when: swapfile_needed and (not swapfile_path)
 
 - name: Create swap file
-  command: fallocate -l "{{ swapfile_size }}" "{{ swapfile_path }}"
+  ansible.builtin.command: fallocate -l "{{ swapfile_size }}" "{{ swapfile_path }}"
   args:
     creates: "{{ swapfile_path }}"
-  when: not swapfile_stat.stat.exists
+  when: swapfile_needed
 
 - name: Set permissions for swap file
-  file:
+  ansible.builtin.file:
     path: "{{ swapfile_path }}"
     mode: 0600
-  when: not swapfile_stat.stat.exists
+  when: swapfile_needed
 
 - name: Format swap file
-  command: mkswap "{{ swapfile_path }}"
-  when: not swapfile_stat.stat.exists
+  ansible.builtin.command: mkswap "{{ swapfile_path }}"
+  when: swapfile_needed
 
 - name: Activate swap file
-  command: swapon "{{ swapfile_path }}"
-  when: not swapfile_stat.stat.exists
+  ansible.builtin.command: swapon "{{ swapfile_path }}"
+  when: swapfile_needed
 
 - name: Update fstab to persist swap file
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/fstab
     line: "{{ swapfile_path }} none swap defaults 0 0"
     state: present
-  when: not swapfile_stat.stat.exists
+  when: swapfile_needed
