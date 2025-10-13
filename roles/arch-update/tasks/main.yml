@@ -18,11 +18,20 @@
     aur_only: true
   when: aur_packages is defined
 
+- name: Checkout PKGBUILDs git repo
+  become: true
+  become_user: aur_builder
+  ansible.builtin.git:
+    repo: https://github.com/rafrombrc/PKGBUILDs
+    dest: /home/aur_builder/src/PKGBUILDs
+  when: pkgbuild_packages is defined
+
 - name: Upgrade PKGBUILD packages
+  become: true
+  become_user: aur_builder
   kewlfft.aur.aur:
     use: makepkg
     local_pkgbuild: /home/aur_builder/src/PKGBUILDs/{{ item }}
     name: "{{ item }}"
-    upgrade: true
   loop: "{{ pkgbuild_packages }}"
   when: pkgbuild_packages is defined
