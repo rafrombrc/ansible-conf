@@ -7,9 +7,9 @@ all:
     bedroom:
       ansible_host: bedroom-ans
     muse:
-      ansible_host: muse-ans.nonsequitarian.org
+      ansible_host: muse.lan
     moz:
-      ansible_host: moz-ans.nonsequitarian.org
+      ansible_host: moz.lan
     lil:
       ansible_host: lil.lan
       ansible_python_interpreter: /usr/bin/python
