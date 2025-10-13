@@ -1,0 +1,17 @@
+---
+- name: Copy snapclient package
+  ansible.builtin.copy:
+    src: snapclient-0.31.0-1-aarch64.pkg.tar.zst
+    dest: /home/rob/pkgs/snapclient-0.31.0-1-aarch64.pkg.tar.zst
+
+- name: Install snapclient package
+  become: true
+  community.general.pacman:
+    name: /home/rob/pkgs/snapclient-0.31.0-1-aarch64.pkg.tar.zst
+    state: present
+
+- name: Copy /etc/default/snapclient
+  become: true
+  ansible.builtin.copy:
+    src: etc_default_snapclient
+    dest: /etc/default/snapclient
