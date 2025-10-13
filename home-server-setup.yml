@@ -4,7 +4,7 @@
     - config/home-server.yml
     - config/home-server-vault.yml
   handlers:
-    - import_tasks: handlers.yml
+    - import_tasks: handlers/main.yml
 
   roles:
     - role: swapfile
