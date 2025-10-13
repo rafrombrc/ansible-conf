@@ -1,4 +1,4 @@
 ---
-- hosts: home-pis
+- hosts: home_pis
   roles:
     - arch-update
