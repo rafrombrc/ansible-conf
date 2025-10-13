@@ -37,6 +37,9 @@ other_packages:
   - vlc-plugin-x264
   - iperf
   - network-manager-applet
+  - restic
+  - jq
+  - waypipe
 
 niri_packages:
   - niri
@@ -58,7 +61,6 @@ aur_packages:
   - octopi
   - electron19-bin
   - google-messages-bin
-
 
 niri_aur_packages:
   - niriswitcher

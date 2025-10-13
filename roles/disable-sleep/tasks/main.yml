@@ -1,0 +1,34 @@
+- name: Disable suspend
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/sleep.conf
+    regexp: ^\#?AllowSuspend\=yes
+    line: AllowSuspend=no
+
+- name: Disable hibernate
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/sleep.conf
+    regexp: ^\#?AllowHibernation\=yes
+    line: AllowHibernation=no
+
+- name: Disable suspend then hibernate
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/sleep.conf
+    regexp: ^\#?AllowSuspendThenHibernate\=yes
+    line: AllowSuspendThenHibernate=no
+
+- name: Disable sleep
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/sleep.conf
+    regexp: ^\#?AllowSleep\=yes
+    line: AllowSleep=no
+
+- name: Disable hybrid sleep
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/sleep.conf
+    regexp: ^\#?AllowHybridSleep\=yes
+    line: AllowHybridSleep=no

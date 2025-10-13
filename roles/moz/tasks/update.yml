@@ -1,5 +1,0 @@
-- name: Update system
-  become: true
-  community.general.pacman:
-    update_cache: yes
-    upgrade: yes
