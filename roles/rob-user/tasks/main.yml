@@ -44,6 +44,15 @@
     group: rob
     create: true
 
+- name: Copy .vimrc
+  ansible.builtin.copy:
+    src: vimrc
+    dest: /home/rob/.vimrc
+    mode: 0744
+    force: false
+    owner: rob
+    group: rob
+
 - name: Copy pods command
   ansible.builtin.copy:
     src: pods
