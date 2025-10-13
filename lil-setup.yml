@@ -1,0 +1,33 @@
+---
+- hosts: lil
+  vars_files:
+    - config/lil.yml
+    - config/lil-vault.yml
+  handlers:
+    - import_tasks: handlers/main.yml
+
+  roles:
+    - role: swapfile
+      become: true
+      tags: swapfile
+
+    - role: set-hostname
+      become: true
+      tags: set-hostname
+
+    - role: sudoers
+      become: true
+      tags: sudoers
+
+    - role: rob-user
+      become: true
+      tags: rob-user
+
+    - role: arch-base
+      become: true
+      tags: arch-base
+
+    - role: pkgbuilds
+      become: true
+      become_user: aur_builder
+      tags: pkgbuilds

@@ -10,11 +10,14 @@ all:
       ansible_host: muse-ans.nonsequitarian.org
     moz:
       ansible_host: moz-ans.nonsequitarian.org
+    lil:
+      ansible_host: lil.lan
+      ansible_python_interpreter: /usr/bin/python
     non0:
       ansible_host: non0-ans.nonsequitarian.org
 
   children:
-    home_pi_clients:
+    home_pis:
       hosts:
         livingroom:
         kitchen:
