@@ -19,7 +19,6 @@ all:
   children:
     home_pis:
       hosts:
-        livingroom:
         kitchen:
         bedroom:
       vars:
