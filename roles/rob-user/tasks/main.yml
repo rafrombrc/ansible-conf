@@ -63,6 +63,15 @@
     group: rob
   when: podman_apps is defined
 
+- name: Allow rob to sudo as pods
+  community.general.sudoers:
+    name: rob-do-as-pods
+    state: present
+    user: rob
+    runas: pods
+    commands: ALL
+  when: podman_apps is defined
+
 - name: Set color prompt
   ansible.builtin.lineinfile:
     path: /home/rob/.bashrc
