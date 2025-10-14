@@ -1,55 +1,54 @@
 ---
+- name: Set default swap path if not specified
+  ansible.builtin.set_fact:
+    swapfile_path: /swapfile
+  when: swapfile_path is not defined
+
 - name: Check if swap file exists
   ansible.builtin.stat:
     path: "{{ swapfile_path }}"
   register: swapfile_stat
 
 - name: Check if swap partition exists
-  ansible.builtin.lineinfile:
-    name: /etc/fstab
-    line: '^[^#].*swap.*'
-    state: present
-  check_mode: true
-  register: conf
+  ansible.builtin.command: grep ^[^#].*swap.* /etc/fstab
+  check_mode: false
+  ignore_errors: true
+  changed_when: false
+  register: swap_part
 
 - name: Set fact for swapfile needed
   ansible.builtin.set_fact:
     swapfile_needed: true
-  when: (not swapfile_stat.stat.exists) and ((conf is changed) or (conf is failed))
+  when: not swapfile_stat.stat.exists and (swap_part.rc != 0)
 
 - name: Set default swap size if not specified
   ansible.builtin.set_fact:
     swapfile_size: 8G
-  when: swapfile_needed and (not swapfile_size)
-
-- name: Set default swap path if not specified
-  ansible.builtin.set_fact:
-    swapfile_path: /swapfile
-  when: swapfile_needed and (not swapfile_path)
+  when: swapfile_needed is defined
 
 - name: Create swap file
   ansible.builtin.command: fallocate -l "{{ swapfile_size }}" "{{ swapfile_path }}"
   args:
     creates: "{{ swapfile_path }}"
-  when: swapfile_needed
+  when: swapfile_needed is defined
 
 - name: Set permissions for swap file
   ansible.builtin.file:
     path: "{{ swapfile_path }}"
     mode: 0600
-  when: swapfile_needed
+  when: swapfile_needed is defined
 
 - name: Format swap file
   ansible.builtin.command: mkswap "{{ swapfile_path }}"
-  when: swapfile_needed
+  when: swapfile_needed is defined
 
 - name: Activate swap file
   ansible.builtin.command: swapon "{{ swapfile_path }}"
-  when: swapfile_needed
+  when: swapfile_needed is defined
 
 - name: Update fstab to persist swap file
   ansible.builtin.lineinfile:
     dest: /etc/fstab
     line: "{{ swapfile_path }} none swap defaults 0 0"
     state: present
-  when: swapfile_needed
+  when: swapfile_needed is defined
