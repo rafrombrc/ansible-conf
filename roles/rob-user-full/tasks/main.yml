@@ -1,0 +1,6 @@
+---
+- name: Checkout .emacs.d folder
+  ansible.builtin.git:
+    repo: git@github.com:rafrombrc/dot-emacs-dot-d.git
+    dest: /home/rob/.emacs.d
+    key_file: /home/rob/.ssh/github_key

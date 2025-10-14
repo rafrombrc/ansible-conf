@@ -36,3 +36,6 @@
     - role: disable-sleep
       become: true
       tags: disable-sleep
+
+    - role: rob-user-full
+      tags: rob-user-full
