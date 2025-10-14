@@ -1,0 +1,37 @@
+# Niri Session Manager Configuration
+
+# Apps that should only have one instance
+[single_instance_apps]
+apps = [
+    "firefox",
+    "zen",
+    "firefox-nightly",
+    "thunderbird",
+    "zoom"
+]
+
+#Application remapping
+[app_mappings]
+
+"org.kde.konsole" = ["konsole"]
+"thunderbird" = ["/usr/bin/thunderbird"]
+"everdo" = ["/opt/Everdo/everdo"]
+"signal" = ["/home/rob/bin/signal-desktop"]
+"zoom" = ["/usr/bin/zoom"]
+"Emacs" = ["/usr/bin/emacsclient"]
+"android-messages-desktop" = ["/opt/Android Messages/AndroidMessages"]
+"obsidian" = ["/usr/bin/obsidian"]
+"Hexchat" = ["/usr/bin/hexchat"]
+
+# flatpak remapping
+#"vesktop" = ["flatpak", "run", "dev.vencord.Vesktop"]
+#"discord" = ["flatpak", "run", "com.discordapp.Discord"]
+#"slack" = ["flatpak", "run", "com.slack.Slack"]
+#"obs" = ["flatpak", "run", "com.obsproject.Studio"]
+
+# Simple command remapping
+#"com.mitchellh.ghostty" = ["ghostty"]
+#"org.wezfurlong.wezterm" = ["wezterm"]
+
+# Commands with arguments
+#"firefox-custom" = ["firefox", "--profile", "default-release"]

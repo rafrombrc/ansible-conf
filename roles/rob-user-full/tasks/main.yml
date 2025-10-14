@@ -4,3 +4,16 @@
     repo: git@github.com:rafrombrc/dot-emacs-dot-d.git
     dest: /home/rob/.emacs.d
     key_file: /home/rob/.ssh/github_key
+
+- name: Import niri tasks
+  import_tasks: niri.yml
+  tags: niri
+
+- name: Import pkgbuilds role
+  ansible.builtin.include_role:
+    name: pkgbuilds
+    apply:
+      become: true
+      become_user: aur_builder
+  tags: pkgbuilds
+

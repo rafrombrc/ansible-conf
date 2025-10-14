@@ -62,6 +62,16 @@ aur_packages:
   - electron19-bin
   - google-messages-bin
 
+pkgbuild_packages:
+  - niri-session-manager-bin
+
 niri_aur_packages:
   - niriswitcher
   - niri-session-manager
+
+niri_configs:
+  - mako
+  - niri
+  - niri-session-manager
+  - niriswitcher
+  - waybar

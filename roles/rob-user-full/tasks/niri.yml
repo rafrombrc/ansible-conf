@@ -1,0 +1,20 @@
+---
+- name: Install niri packages
+  community.general.pacman:
+    name: "{{ niri_packages }}"
+    state: present
+
+- name: Install niri AUR packages
+  become: true
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: paru
+    name: "{{ niri_aur_packages }}"
+    state: present
+
+- name: Install niri config files
+  ansible.builtin.copy:
+    src: config/{{ item }}
+    dest: /home/rob/.config/
+    backup: true
+  loop: "{{ niri_configs }}"
