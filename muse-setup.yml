@@ -1,0 +1,36 @@
+---
+- hosts: moz
+  vars_files:
+    - config/moz.yml
+    - config/moz-vault.yml
+
+  handlers:
+    - import_tasks: handlers/main.yml
+
+  roles:
+    - role: swapfile
+      become: true
+      tags: swapfile
+
+    - role: set-hostname
+      become: true
+      tags: set-hostname
+
+    - role: sudoers
+      become: true
+      tags: sudoers
+
+    - role: rob-user
+      become: true
+      tags: rob-user
+
+    - role: arch-base
+      become: true
+      tags: arch-base
+
+    - role: disable-sleep
+      become: true
+      tags: disable-sleep
+
+    - role: rob-user-full
+      tags: rob-user-full
