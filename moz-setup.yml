@@ -1,7 +1,8 @@
 ---
 - hosts: moz
   vars_files:
-    - config/moz.yaml
+    - config/moz.yml
+    - config/moz-vault.yml
 
   handlers:
     - import_tasks: handlers/main.yml
