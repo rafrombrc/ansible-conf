@@ -3,6 +3,10 @@
 // Check the wiki for a full description of the configuration:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 
+output "HDMI-A-1" {
+    mode "3440x1440@99.982"
+}
+
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
@@ -60,7 +64,7 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    focus-follows-mouse max-scroll-amount="5%"
+    // focus-follows-mouse max-scroll-amount="5%"
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -564,17 +568,8 @@ window-rule {
 }
 
 window-rule {
-    match app-id="zoom" title="Zoom Workplace"
-    default-column-width { proportion 0.27; }
-    default-window-height { proportion 0.5; }
-}
-
-window-rule {
-    match app-id="zoom" title="Meeting"
+    match app-id="Zoom"
     open-floating true
-    default-floating-position x=400 y=20 relative-to="top-left"
-    default-window-height { proportion 0.5; }
-    default-column-width { proportion 0.35; }
 }
 
 window-rule {
@@ -599,7 +594,6 @@ window-rule {
     default-window-height { proportion 0.5; }
 }
 
-
 window-rule {
     match app-id="thunderbird" title="Reminder"
     match app-id="thunderbird" title="Invitations"
@@ -618,6 +612,11 @@ window-rule {
     open-floating true
     default-window-height { proportion 0.6; }
     default-column-width { proportion 0.3; }
+}
+
+window-rule {
+    match app-id="org.kde.dolphin"
+    open-floating true
 }
 
 window-rule {
@@ -690,11 +689,6 @@ window-rule {
     open-floating true
 }
 
-window-rule {
-    match app-id="Katana-MK2-FxFloorBoard"
-    default-column-width { proportion 0.74; }
-}
-
 hotkey-overlay {
     skip-at-startup
 }
@@ -714,7 +708,7 @@ spawn-at-startup "systemctl" "--user" "restart" "mako"
 spawn-at-startup "systemctl" "--user" "restart" "waybar"
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 spawn-at-startup "xwayland-satellite"
-spawn-at-startup "swaybg" "-i" "/home/rob/.local/share/wallpapers/sun-3440.jpg"
+spawn-at-startup "swaybg" "-i" "/home/rob/.local/share/wallpapers/3440-space.jpg"
 spawn-at-startup "swayidle" "timeout" "300" "niri msg action power-off-monitors"
 spawn-at-startup "niri-session-manager" "--save-interval" "5"
 spawn-at-startup "niriswitcher"
@@ -722,4 +716,3 @@ spawn-at-startup "/usr/lib/pam_kwallet_init"
 
 // tray icons
 spawn-at-startup "nm-applet"
-spawn-at-startup "/home/rob/bin/octopi-notifier.sh"
