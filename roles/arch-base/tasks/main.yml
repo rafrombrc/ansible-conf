@@ -13,6 +13,7 @@
   community.general.pacman:
     name: "{{ dev_packages }}"
     state: present
+  when: dev_packages is defined
 
 - name: Create the aur_builder user
   ansible.builtin.user:
