@@ -1,8 +1,8 @@
 ---
-- hosts: moz
+- hosts: muse
   vars_files:
-    - config/moz.yml
-    - config/moz-vault.yml
+    - config/muse.yml
+    - config/muse-vault.yml
 
   handlers:
     - import_tasks: handlers/main.yml
