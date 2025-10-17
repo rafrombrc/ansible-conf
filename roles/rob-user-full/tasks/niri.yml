@@ -15,6 +15,6 @@
 - name: Install niri config files
   ansible.builtin.copy:
     src: config/{{ item }}
-    dest: /home/rob/.config/
+    dest: /home/rob/.config/{{ item }}
     backup: true
   loop: "{{ niri_configs }}"
