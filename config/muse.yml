@@ -39,6 +39,7 @@ other_packages:
   - jq
   - waypipe
   - python-lsp-server
+  - yadm
 
 niri_packages:
   - niri

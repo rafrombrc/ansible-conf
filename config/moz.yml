@@ -41,6 +41,7 @@ other_packages:
   - restic
   - jq
   - waypipe
+  - yadm
 
 niri_packages:
   - niri
