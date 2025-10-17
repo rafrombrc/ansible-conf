@@ -39,6 +39,7 @@ other_packages:
   - restic
   - jq
   - waypipe
+  - python-lsp-server
 
 niri_packages:
   - niri
@@ -59,6 +60,7 @@ aur_packages:
   - octopi
   - electron19-bin
   - google-messages-bin
+  - emacs-lsp-booster
 
 niri_aur_packages:
   - niriswitcher

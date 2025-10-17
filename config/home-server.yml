@@ -24,6 +24,7 @@ other_packages:
   - rsync
   - locate
   - mopidy
+  - python-pyaes
 
 dev_packages:
   - python
