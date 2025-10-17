@@ -67,6 +67,7 @@ aur_packages:
   - octopi
   - electron19-bin
   - google-messages-bin
+  - emacs-lsp-booster
 
 pkgbuild_packages:
   - niri-session-manager-bin
