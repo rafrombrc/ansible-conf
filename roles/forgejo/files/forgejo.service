@@ -1,0 +1,13 @@
+[Unit]
+Description=forgejo via podman compose
+
+
+[Service]
+WorkingDirectory=%h/forgejo
+Type=simple
+Restart=always
+ExecStart=/usr/bin/podman compose up --remove-orphans
+ExecStop=/usr/bin/podman compose down
+
+[Install]
+WantedBy=default.target

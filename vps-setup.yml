@@ -61,6 +61,11 @@
       become_user: pods
       tags: ente
 
+    - role: forgejo
+      become: true
+      become_user: pods
+      tags: forgejo
+
     - role: loop-role
       vars:
         inner_role: hugo-sites

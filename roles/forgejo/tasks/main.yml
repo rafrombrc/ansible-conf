@@ -1,0 +1,42 @@
+---
+- name: Import podsuid role
+  import_role:
+    name: podsuid
+
+- name: Create forgejo compose folder
+  ansible.builtin.file:
+    path: /home/pods/forgejo
+    state: directory
+
+- name: Template forgejo compose.yaml file
+  ansible.builtin.template:
+    src: compose.yaml.j2
+    dest: /home/pods/forgejo/compose.yaml
+    mode: 0600
+  notify: Restart forgejo systemd service
+
+- name: Copy forgejo.service file
+  ansible.builtin.copy:
+    src: forgejo.service
+    dest: /home/pods/.config/systemd/user/forgejo.service
+    mode: 0644
+  notify:
+    - Reload pods user systemd config
+    - Restart forgejo systemd service
+
+- name: Enable forgejo systemd service
+  ansible.builtin.systemd_service:
+    name: forgejo.service
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Place forgejo nginx config
+  become: true
+  become_user: root
+  ansible.builtin.copy:
+    src: forge.nonsequitarian.org
+    dest: /etc/nginx/sites.d/forge.nonsequitarian.org
+    mode: 0644
+  notify: Restart nginx service

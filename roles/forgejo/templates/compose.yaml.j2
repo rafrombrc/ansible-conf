@@ -1,0 +1,22 @@
+---
+networks:
+  forgejo:
+    external: false
+
+services:
+  server:
+    image: codeberg.org/forgejo/forgejo:13
+    container_name: forgejo
+    environment:
+      - USER_UID={{ podsuid }}
+      - USER_GID={{ podsgid }}
+    restart: always
+    networks:
+      - forgejo
+    volumes:
+      - ./forgejo:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '3100:3000'
+      - '2222:22'

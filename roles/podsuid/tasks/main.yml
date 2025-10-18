@@ -8,3 +8,6 @@
   ansible.builtin.set_fact:
     podsuid: "{{ getent_passwd['pods'][1] }}"
 
+- name: Store pods gid for later user
+  ansible.builtin.set_fact:
+    podsgid: "{{ getent_passwd['pods'][2] }}"
