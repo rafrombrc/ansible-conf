@@ -15,6 +15,20 @@
     state: present
   when: dev_packages is defined
 
+- name: Infer timezone from /etc/localtime
+  ansible.builtin.stat:
+    path: /etc/localtime
+  register: localtime_stat
+  tags: timezone
+
+- name: Set /etc/timezone
+  ansible.builtin.lineinfile:
+    path: /etc/timezone
+    regexp: '.*'
+    line: "{{ localtime_stat.stat.lnk_source | dirname | basename }}/{{ localtime_stat.stat.lnk_source | basename }}"
+    create: true
+  tags: timezone
+
 - name: Create the aur_builder user
   ansible.builtin.user:
     name: aur_builder
