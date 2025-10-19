@@ -3,17 +3,20 @@
   community.general.pacman:
     name: "{{ base_packages }}"
     state: present
+  tags: packages
 
 - name: Install other packages
   community.general.pacman:
     name: "{{ other_packages }}"
     state: present
+  tags: packages
 
 - name: Install dev packages
   community.general.pacman:
     name: "{{ dev_packages }}"
     state: present
   when: dev_packages is defined
+  tags: packages
 
 - name: Infer timezone from /etc/localtime
   ansible.builtin.stat:
