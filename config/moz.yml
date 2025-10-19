@@ -42,6 +42,7 @@ other_packages:
   - jq
   - waypipe
   - yadm
+  - python-j2cli
 
 niri_packages:
   - niri
