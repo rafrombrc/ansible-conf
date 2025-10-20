@@ -19,13 +19,6 @@
     regexp: ^\#?AllowSuspendThenHibernate\=yes
     line: AllowSuspendThenHibernate=no
 
-- name: Disable sleep
-  become: true
-  ansible.builtin.lineinfile:
-    path: /etc/systemd/sleep.conf
-    regexp: ^\#?AllowSleep\=yes
-    line: AllowSleep=no
-
 - name: Disable hybrid sleep
   become: true
   ansible.builtin.lineinfile:
