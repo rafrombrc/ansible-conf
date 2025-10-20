@@ -42,7 +42,10 @@ other_packages:
   - jq
   - waypipe
   - yadm
-  - python-j2cli
+  - python-hatchling  # for jinjanator
+  - python-hatch-vcs
+  - python-hatch-fancy-pypi-readme
+  - python-dotenv
 
 niri_packages:
   - niri
@@ -67,6 +70,8 @@ aur_packages:
 
 pkgbuild_packages:
   - niri-session-manager-bin
+  - jinjanator
+  - jinjanator-plugins
 
 niri_aur_packages:
   - niriswitcher
