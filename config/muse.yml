@@ -40,10 +40,6 @@ other_packages:
   - waypipe
   - python-lsp-server
   - yadm
-  - python-hatchling  # for jinjanator
-  - python-hatch-vcs
-  - python-hatch-fancy-pypi-readme
-  - python-dotenv
 
 niri_packages:
   - niri
