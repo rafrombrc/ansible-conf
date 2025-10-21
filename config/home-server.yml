@@ -47,4 +47,3 @@ pkgbuild_packages:
   - python-mopidy-tidal-git
   - python-mopidy-tidallp-git
   - python-tidalapi-git
-  
