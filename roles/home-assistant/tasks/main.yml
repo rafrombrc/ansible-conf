@@ -1,0 +1,32 @@
+---
+- name: Import podsuid role
+  import_role:
+    name: podsuid
+
+- name: Copy home-assistant dir
+  ansible.builtin.copy:
+    src: home-assistant
+    dest: /home/pods
+
+- name: Copy home-assistant.service file
+  ansible.builtin.copy:
+    src: home-assistant.service
+    dest: /home/pods/.config/systemd/user/home-assistant.service
+    mode: 0644
+
+- name: Enable home-assistant systemd service
+  ansible.builtin.systemd_service:
+    name: home-assistant.service
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Place home-assistant nginx config
+  become: true
+  become_user: root
+  ansible.builtin.copy:
+    src: home-nginx.conf
+    dest: /etc/nginx/sites.d/home
+    mode: 0644
+  notify: Restart nginx service

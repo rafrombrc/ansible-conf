@@ -46,3 +46,8 @@
       become: true
       become_user: pods
       tags: music-assistant
+
+    - role: home-assistant
+      become: true
+      become_user: pods
+      tags: home-assistant
