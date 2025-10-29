@@ -11,6 +11,20 @@
     mode: 0644
   notify: Restart fail2ban service
 
+- name: Copy nginx-badbots.conf jail file
+  ansible.builtin.copy:
+    src: nginx-badbots-jail.conf
+    dest: /etc/fail2ban/jail.d/nginx-badbots.conf
+    mode: 0644
+  notify: Restart fail2ban service
+
+- name: Copy nginx-badbots.conf filter file
+  ansible.builtin.copy:
+    src: nginx-badbots-filter.conf
+    dest: /etc/fail2ban/filter.d/nginx-badbots.conf
+    mode: 0644
+  notify: Restart fail2ban service
+
 - name: Enable fail2ban service
   ansible.builtin.systemd_service:
     name: fail2ban.service
