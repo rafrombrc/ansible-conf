@@ -1,6 +1,9 @@
 services:
   museum:
-    image: ghcr.io/ente-io/server
+    build:
+      dockerfile_inline: |
+        FROM ghcr.io/ente-io/server
+        RUN apk add curl
     ports:
       - 9080:8080 # API
     depends_on:
