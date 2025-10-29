@@ -14,6 +14,7 @@ base_packages:
   - git
   - wget
   - reflector
+  - qemu-guest-agent
 
 other_packages:
   - bash-completion
@@ -29,6 +30,9 @@ other_packages:
   - bc
   - znc
   - locate
+  - curl
+  - certbot
+  - certbot-nginx
 
 dev_packages:
   - python
