@@ -22,9 +22,8 @@ server {
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
-        access_log /var/log/nginx/search.nonsequitarian.org-access.log;
-        error_log /var/log/nginx/search.nonsequitarian.org-error.log;
-
+	access_log syslog:server=unix:/dev/log,tag=search;
+	error_log syslog:server=unix:/dev/log,tag=search_error;
 }
 
 

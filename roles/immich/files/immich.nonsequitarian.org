@@ -34,8 +34,8 @@ server {
         include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
         ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
-	access_log /var/log/nginx/immich.nonsequitarian.org-access.log;
-	error_log /var/log/nginx/immich.nonsequitarian.org-error.log;
+	access_log syslog:server=unix:/dev/log,tag=immich;
+	error_log syslog:server=unix:/dev/log,tag=immich_error;
 }
 
 upstream docker-immich {
