@@ -37,6 +37,10 @@
       become: true
       tags: anubis
 
+    - role: fail2ban
+      become: true
+      tags: fail2ban
+
     - role: podman
       become: true
       tags: podman

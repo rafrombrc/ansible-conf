@@ -1,0 +1,19 @@
+---
+- name: Install fail2ban package
+  community.general.pacman:
+    name: fail2ban
+    state: present
+
+- name: Copy sshd.conf file
+  ansible.builtin.copy:
+    src: sshd.conf
+    dest: /etc/fail2ban/jail.d/sshd.conf
+    mode: 0644
+  notify: Restart fail2ban service
+
+- name: Enable fail2ban service
+  ansible.builtin.systemd_service:
+    name: fail2ban.service
+    state: started
+    enabled: true
+
