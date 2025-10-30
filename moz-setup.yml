@@ -1,7 +1,10 @@
 ---
 - hosts: moz
   vars_files:
+    - config/base.yml
     - config/moz.yml
+    - config/gui.yml
+    - config/dev.yml
     - config/moz-vault.yml
 
   handlers:

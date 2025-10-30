@@ -1,8 +1,12 @@
 ---
 - hosts: lil
   vars_files:
+    - config/base.yml
     - config/lil.yml
+    - config/gui.yml
+    - config/dev.yml
     - config/lil-vault.yml
+
   handlers:
     - import_tasks: handlers/main.yml
 
@@ -26,8 +30,3 @@
     - role: arch-base
       become: true
       tags: arch-base
-
-    - role: pkgbuilds
-      become: true
-      become_user: aur_builder
-      tags: pkgbuilds

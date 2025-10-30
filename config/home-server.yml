@@ -2,34 +2,11 @@
 swapfile_path: /swapfile
 swapfile_size: 8G
 
-base_packages:
-  - base
-  - base-devel
-  - linux
-  - linux-firmware
-  - sudo
-  - openssh
-  - man-db
-  - man-pages
-  - git
-  - wget
-
-other_packages:
-  - bash-completion
-  - polkit
-  - vi
-  - nginx
-  - podman
-  - podman-compose
-  - rsync
-  - locate
+host_packages:
   - mopidy
   - python-pyaes
 
-dev_packages:
-  - python
-
-aur_packages:
+host_aur_packages:
   - adduser
   - libtremor-git
   - mopidy-internetarchive
@@ -42,7 +19,7 @@ aur_packages:
   - python-uritools
   - snapcast
 
-pkgbuild_packages:
+host_pkgbuild_packages:
   - python-mopidy-mobile
   - python-mopidy-tidal-git
   - python-mopidy-tidallp-git

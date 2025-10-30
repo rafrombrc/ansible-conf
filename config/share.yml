@@ -1,0 +1,89 @@
+---
+base_packages:
+  - base
+  - base-devel
+  - linux-firmware
+  - sudo
+  - openssh
+  - man-db
+  - man-pages
+  - git
+  - wget
+  - reflector
+  - python
+  - python-pip
+
+other_packages:
+  - bash-completion
+  - polkit
+  - vim
+  - tailscale
+  - rsync
+  - emacs
+  - rust
+  - python-virtualenvwrapper
+  - kwalletmanager
+  - thunderbird
+  - signal-desktop
+  - zsh
+  - xdotool
+  - plasma-x11-session
+  - five-or-more
+  - mesa-demos
+  - vlc
+  - vlc-plugin-ffmpeg
+  - vlc-plugin-x264
+  - iperf
+  - network-manager-applet
+  - restic
+  - jq
+  - waypipe
+  - python-lsp-server
+  - yadm
+
+niri_packages:
+  - niri
+  - waybar
+  - swaylock
+  - swaybg
+  - swayidle
+  - fuzzel
+  - xwayland-satellite
+  - xdg-desktop-portal-gtk
+  - xdg-desktop-portal-gnome
+
+aur_packages:
+  - zoom
+  - cable
+  - firefox-nightly-bin
+  - signalbackup-tools-git
+  - octopi
+  - electron19-bin
+  - google-messages-bin
+  - emacs-lsp-booster
+
+niri_aur_packages:
+  - niriswitcher
+  - niri-session-manager
+
+pkgbuild_packages:
+  - ardour
+  - katana-proxy-git
+  - midiminder
+  - nilsk1v
+  - tuxguitar-bin
+  - zl-compressor-bin
+  - zl-equalizer-bin
+  - zl-splitter-bin
+  - zl-warm-bin
+  - zohomeeting
+  - niri-session-manager-bin
+  - jinjanator
+  - jinjanator-plugins
+
+niri_configs:
+  - mako
+  - niri
+  - niri-session-manager
+  - niriswitcher
+  - waybar

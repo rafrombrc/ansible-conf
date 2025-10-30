@@ -2,41 +2,12 @@
 swapfile_path: /swapfile
 swapfile_size: 8G
 
-base_packages:
-  - base
-  - base-devel
-  - linux
-  - linux-firmware
-  - sudo
-  - openssh
-  - man-db
-  - man-pages
-  - git
-  - wget
-  - reflector
+host_packages:
   - qemu-guest-agent
-
-other_packages:
-  - bash-completion
-  - polkit
-  - vi
-  - nginx
-  - anubis
-  - podman
-  - podman-compose
   - tailscale
-  - rsync
   - hugo
   - bc
   - znc
-  - locate
-  - curl
-  - certbot
-  - certbot-nginx
-
-dev_packages:
-  - python
-  - python-pip
 
 podman_apps:
   - role_name: piwigo

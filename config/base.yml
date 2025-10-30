@@ -1,0 +1,32 @@
+---
+base_packages:
+  - base
+  - base-devel
+  - linux
+  - linux-lts
+  - linux-firmware
+  - sudo
+  - openssh
+  - man-db
+  - man-pages
+  - git
+  - wget
+  - curl
+  - reflector
+  - python
+  - python-pip
+  - bash-completion
+  - polkit
+  - vim
+  - rsync
+  - locate
+  - rust
+  - restic
+  - yadm
+
+base_aur_packages:
+  - vi-vim-symlink
+
+base_pkgbuild_packages:
+  - jinjanator
+  - jinjanator-plugins

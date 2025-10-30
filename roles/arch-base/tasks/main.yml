@@ -5,19 +5,6 @@
     state: present
   tags: packages
 
-- name: Install other packages
-  community.general.pacman:
-    name: "{{ other_packages }}"
-    state: present
-  tags: packages
-
-- name: Install dev packages
-  community.general.pacman:
-    name: "{{ dev_packages }}"
-    state: present
-  when: dev_packages is defined
-  tags: packages
-
 - name: Infer timezone from /etc/localtime
   ansible.builtin.stat:
     path: /etc/localtime
@@ -32,25 +19,7 @@
     create: true
   tags: timezone
 
-- name: Create the aur_builder user
-  ansible.builtin.user:
-    name: aur_builder
-    create_home: yes
-
-- name: Allow aur_builder user to run `sudo pacman` w/o password
-  community.general.sudoers:
-    name: aur_builder
-    user: aur_builder
-    nopassword: true
-    commands: /usr/bin/pacman
-
-- name: Allow sudo group to sudo as aur_builder
-  community.general.sudoers:
-    name: sudo-do-as-aur_builder
-    state: present
-    group: sudo
-    runas: aur_builder
-    commands: ALL
+- import_playbook: aur_builder.yml
 
 - name: Install paru-bin
   become: true
@@ -60,12 +29,94 @@
     use: makepkg
     state: present
 
-- name: Install aur packages
+- name: Install host packages
+  community.general.pacman:
+    name: "{{ host_packages }}"
+    state: present
+  when: host_packages is defined
+  tags: packages
+
+- name: Install host AUR packages
   become: true
   become_user: aur_builder
   kewlfft.aur.aur:
     use: paru
-    name: "{{ aur_packages }}"
+    name: "{{ host_aur_packages }}"
     state: present
-  when: aur_packages is defined
-  tags: install-aur
+  when: host_aur_packages is defined
+  tags: aur_packages
+
+- name: Install host PKGBUILD packages
+  kewlfft.aur.aur:
+    use: makepkg
+    local_pkgbuild: /home/aur_builder/src/PKGBUILDs/{{ item }}
+    name: "{{ item }}"
+  loop: "{{ host_pkgbuild_packages }}"
+  when: host_pkgbuild_packages is defined
+  tags: pkgbuild_packages
+
+- name: Install dev packages
+  community.general.pacman:
+    name: "{{ dev_packages }}"
+    state: present
+  when: dev_packages is defined
+  tags: packages
+
+- name: Install host dev packages
+  community.general.pacman:
+    name: "{{ host_dev_packages }}"
+    state: present
+  when: host_dev_packages is defined
+  tags: packages
+
+- name: Install dev AUR packages
+  become: true
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: paru
+    name: "{{ dev_aur_packages }}"
+    state: present
+  when: dev_aur_packages is defined
+  tags: aur_packages
+
+- name: Install dev PKGBUILD packages
+  kewlfft.aur.aur:
+    use: makepkg
+    local_pkgbuild: /home/aur_builder/src/PKGBUILDs/{{ item }}
+    name: "{{ item }}"
+  loop: "{{ dev_pkgbuild_packages }}"
+  when: dev_pkgbuild_packages is defined
+  tags: pkgbuild_packages
+
+- name: Install gui packages
+  community.general.pacman:
+    name: "{{ gui_packages }}"
+    state: present
+  when: gui_packages is defined
+  tags: packages
+
+- name: Install host gui packages
+  community.general.pacman:
+    name: "{{ host_gui_packages }}"
+    state: present
+  when: host_gui_packages is defined
+  tags: packages
+
+- name: Install gui AUR packages
+  become: true
+  become_user: aur_builder
+  kewlfft.aur.aur:
+    use: paru
+    name: "{{ gui_aur_packages }}"
+    state: present
+  when: gui_aur_packages is defined
+  tags: aur_packages
+
+- name: Install gui PKGBUILD packages
+  kewlfft.aur.aur:
+    use: makepkg
+    local_pkgbuild: /home/aur_builder/src/PKGBUILDs/{{ item }}
+    name: "{{ item }}"
+  loop: "{{ gui_pkgbuild_packages }}"
+  when: gui_pkgbuild_packages is defined
+  tags: pkgbuild_packages

@@ -1,0 +1,33 @@
+---
+gui_packages:
+  - tailscale
+  - kwalletmanager
+  - thunderbird
+  - signal-desktop
+  - five-or-more
+  - vlc
+  - vlc-plugin-ffmpeg
+  - vlc-plugin-x264
+  - network-manager-applet
+  - waypipe
+  - niri
+  - waybar
+  - swaylock
+  - swaybg
+  - swayidle
+  - fuzzel
+  - xwayland-satellite
+  - xdg-desktop-portal-gtk
+  - xdg-desktop-portal-gnome
+
+gui_aur_packages:
+  - zoom
+  - cable
+  - signalbackup-tools-git
+  - octopi
+  - electron19-bin
+  - google-messages-bin
+  - niriswitcher
+
+gui_pkgbuild_packages:
+  - niri-session-manager-bin

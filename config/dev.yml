@@ -1,0 +1,13 @@
+---
+dev_packages:
+  - python-virtualenvwrapper
+  - emacs
+  - iperf
+  - jq
+  - python-lsp-server
+  - elixir
+  - expert-git
+
+dev_aur_packages:
+  - emacs-lsp-booster
+  - asdf-vm

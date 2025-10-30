@@ -5,6 +5,16 @@
     name: nginx
     state: present
 
+- name: Install certbot package
+  community.general.pacman:
+    name: certbot
+    state: present
+
+- name: Install certbot-nginx package
+  community.general.pacman:
+    name: certbot-nginx
+    state: present
+
 - name: Create conf.d dir
   ansible.builtin.file:
     path: /etc/nginx/conf.d

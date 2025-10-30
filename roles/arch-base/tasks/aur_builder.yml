@@ -1,0 +1,25 @@
+---
+- name: Create the aur_builder user
+  ansible.builtin.user:
+    name: aur_builder
+    create_home: yes
+
+- name: Allow aur_builder user to run `sudo pacman` w/o password
+  community.general.sudoers:
+    name: aur_builder
+    user: aur_builder
+    nopassword: true
+    commands: /usr/bin/pacman
+
+- name: Allow sudo group to sudo as aur_builder
+  community.general.sudoers:
+    name: sudo-do-as-aur_builder
+    state: present
+    group: sudo
+    runas: aur_builder
+    commands: ALL
+
+- name: Checkout PKGBUILDs git repo
+  ansible.builtin.git:
+    repo: https://github.com/rafrombrc/PKGBUILDs
+    dest: /home/aur_builder/src/PKGBUILDs
