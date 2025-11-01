@@ -1,0 +1,26 @@
+---
+- name: Generate primary ssh key
+  community.crypto.openssh_keypair:
+    path: /home/rob/.ssh/id_ed25519
+    type: ed25519
+    passphrase: "{{ ssh_key_password }}"
+    comment: rob@{{ inventory_hostname }}
+
+- name: Generate git ssh key
+  community.crypto.openssh_keypair:
+    path: /home/rob/.ssh/git_key
+    type: ed25519
+    comment: rob-git@{{ inventory_hostname }}
+
+- name: Copy initial ssh config
+  ansible.builtin.copy:
+    src: ssh-config
+    dest: /home/rob/.ssh/config##hostname.{{ inventory_hostname }}
+    force: false
+    mode: '0600'
+
+- name: Create ssh config symlink
+  ansible.builtin.file:
+    src: /home/rob/.ssh/config##hostname.{{ inventory_hostname }}
+    dest: /home/rob/.ssh/config
+    state: link

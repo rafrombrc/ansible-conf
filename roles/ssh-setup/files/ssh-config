@@ -1,0 +1,13 @@
+PermitLocalCommand yes
+AddKeysToAgent yes
+
+Host taz4.hyperreal.org
+  User ra
+  Port 64422
+  LocalCommand konsoleprofile colors=remote
+
+Match exec "echo %h | grep -v -e github\.com -e git\.therapish\.org -e \-ans -e \.lan -e forge\.nonsequitarian\.org"
+  LocalCommand konsoleprofile colors=remote
+
+Host forge.nonsequitarian.org
+  Port 2222
