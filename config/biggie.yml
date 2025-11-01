@@ -1,0 +1,9 @@
+---
+host_packages:
+  - linux
+  - linux-lts
+  - tailscale
+
+host_gui_packages:
+  - mesa-demos
+

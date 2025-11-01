@@ -13,6 +13,9 @@ all:
     lil:
       ansible_host: lil.lan
       ansible_python_interpreter: /usr/bin/python
+    biggie:
+      ansible_host: biggie.lan
+      ansible_python_interpreter: /usr/bin/python
     non0:
       ansible_host: non0-ans.nonsequitarian.org
 
