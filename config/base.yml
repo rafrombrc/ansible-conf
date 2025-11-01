@@ -23,6 +23,7 @@ base_packages:
   - rust
   - restic
   - yadm
+  - python-bcrypt # needed to generate SSH key
 
 base_aur_packages:
   - vi-vim-symlink
