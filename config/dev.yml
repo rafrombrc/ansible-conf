@@ -6,8 +6,10 @@ dev_packages:
   - jq
   - python-lsp-server
   - elixir
-  - expert-git
 
 dev_aur_packages:
   - emacs-lsp-booster
   - asdf-vm
+
+def_pkgbuild_packages:
+  - expert-git
