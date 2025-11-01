@@ -121,6 +121,13 @@
   when: gui_packages is defined
   tags: packages
 
+- name: Enable sddm
+  ansible.builtin.systemd_service:
+    name: sddm
+    enabled: true
+  when: gui_packages is defined
+  tags: packages
+
 - name: Install host gui packages
   community.general.pacman:
     name: "{{ host_gui_packages }}"
@@ -148,3 +155,4 @@
   loop: "{{ gui_pkgbuild_packages }}"
   when: gui_pkgbuild_packages is defined
   tags: pkgbuild_packages
+

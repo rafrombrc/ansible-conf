@@ -1,5 +1,6 @@
 ---
 gui_packages:
+  - sddm
   - tailscale
   - kwalletmanager
   - thunderbird
@@ -19,6 +20,8 @@ gui_packages:
   - xwayland-satellite
   - xdg-desktop-portal-gtk
   - xdg-desktop-portal-gnome
+  - konsole
+  - dolphin
 
 gui_aur_packages:
   - zoom
