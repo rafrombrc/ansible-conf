@@ -36,14 +36,6 @@
     owner: rob
     group: rob
 
-- name: Add $HOME/bin dir to $PATH
-  ansible.builtin.lineinfile:
-    dest: /home/rob/.bash_profile
-    line: "PATH=/home/rob/bin:$PATH"
-    owner: rob
-    group: rob
-    create: true
-
 - name: Copy .vimrc
   ansible.builtin.copy:
     src: vimrc

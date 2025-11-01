@@ -31,14 +31,6 @@
       become: true
       tags: arch-base
 
-    - role: pkgbuilds
-      become: true
-      become_user: aur_builder
-      tags: pkgbuilds
-
     - role: disable-sleep
       become: true
       tags: disable-sleep
-
-    - role: rob-user-full
-      tags: rob-user-full
