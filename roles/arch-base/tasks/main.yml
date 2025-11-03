@@ -1,4 +1,5 @@
 ---
+## BASE PACKAGES
 - name: Install base packages
   community.general.pacman:
     name: "{{ base_packages }}"
@@ -51,6 +52,7 @@
   when: base_pkgbuild_packages is defined
   tags: pkgbuild_packages
 
+## HOST PACKAGES
 - name: Install host packages
   community.general.pacman:
     name: "{{ host_packages }}"
@@ -79,6 +81,7 @@
   when: host_pkgbuild_packages is defined
   tags: pkgbuild_packages
 
+## DEV PACKAGES
 - name: Install dev packages
   community.general.pacman:
     name: "{{ dev_packages }}"
@@ -114,45 +117,6 @@
   when: dev_pkgbuild_packages is defined
   tags: pkgbuild_packages
 
-- name: Install gui packages
-  community.general.pacman:
-    name: "{{ gui_packages }}"
-    state: present
-  when: gui_packages is defined
-  tags: packages
-
-- name: Enable sddm
-  ansible.builtin.systemd_service:
-    name: sddm
-    enabled: true
-  when: gui_packages is defined
-  tags: packages
-
-- name: Install host gui packages
-  community.general.pacman:
-    name: "{{ host_gui_packages }}"
-    state: present
-  when: host_gui_packages is defined
-  tags: packages
-
-- name: Install gui AUR packages
-  become: true
-  become_user: aur_builder
-  kewlfft.aur.aur:
-    use: paru
-    name: "{{ gui_aur_packages }}"
-    state: present
-  when: gui_aur_packages is defined
-  tags: aur_packages
-
-- name: Install gui PKGBUILD packages
-  become: true
-  become_user: aur_builder
-  kewlfft.aur.aur:
-    use: makepkg
-    local_pkgbuild: /home/aur_builder/src/PKGBUILDs/{{ item }}
-    name: "{{ item }}"
-  loop: "{{ gui_pkgbuild_packages }}"
-  when: gui_pkgbuild_packages is defined
-  tags: pkgbuild_packages
-
+## GUI
+- name: Set up gui environment
+  ansible.builtin.import_tasks: gui.yml
