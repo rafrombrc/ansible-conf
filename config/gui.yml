@@ -12,6 +12,7 @@ gui_packages:
   - network-manager-applet
   - waypipe
   - niri
+  - otf-font-awesome
   - waybar
   - swaylock
   - swaybg
