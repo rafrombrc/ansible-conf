@@ -6,6 +6,8 @@ host_packages:
 
 host_gui_packages:
   - mesa-demos
+  - nvidia-open-dkms
+  - nvidia-utils
 
 sddm_theme: sddm-astronaut-theme
 sddm_astronaut_theme: pixel_sakura
