@@ -7,3 +7,6 @@ host_packages:
 host_gui_packages:
   - mesa-demos
 
+sddm_theme: sddm-astronaut-theme
+sddm_astronaut_theme: pixel_sakura
+wallpaper_image: john-towner-3Kv48NS4WUU-unsplash.jpg

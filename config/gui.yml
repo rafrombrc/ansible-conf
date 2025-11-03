@@ -32,6 +32,7 @@ gui_aur_packages:
   - electron19-bin
   - google-messages-bin
   - niriswitcher
+  - sddm-astronaut-theme
 
 gui_pkgbuild_packages:
   - niri-session-manager-bin
