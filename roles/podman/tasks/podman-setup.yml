@@ -20,3 +20,9 @@
     path: /usr/bin/newgidmap
     capability: cap_setgid=ep
     state: present
+
+- name: Increase maxkeys kernel value
+  ansible.posix.sysctl:
+    name: kernel.keys.maxkeys
+    value: 400
+    state: present
