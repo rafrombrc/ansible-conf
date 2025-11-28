@@ -4,6 +4,7 @@
   community.general.pacman:
     name: "{{ base_packages }}"
     state: present
+  when: base_packages is defined
   tags: packages
 
 - name: Infer timezone from /etc/localtime
