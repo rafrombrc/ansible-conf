@@ -1,0 +1,58 @@
+
+server {
+        index index.html index.htm;
+        server_name beszel.nonsequitarian.org;
+	include "includes/botfilter.inc";
+
+        # Anubis
+        include "includes/conf-anubis.inc";
+
+        listen 443 ssl; # managed by Certbot
+        ssl_certificate /etc/letsencrypt/live/nonsequitarian.org/fullchain.pem; # managed by Certbot
+        ssl_certificate_key /etc/letsencrypt/live/nonsequitarian.org/privkey.pem; # managed by Certbot
+        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+	access_log syslog:server=unix:/dev/log,tag=beszel;
+	error_log syslog:server=unix:/dev/log,tag=beszel_error;
+}
+
+upstream docker-beszel {
+	server localhost:8090;
+}
+
+server {
+	listen unix:/run/nginx.sock;
+	index index.php;
+        server_name beszel.nonsequitarian.org;
+
+        location / {
+                proxy_pass http://docker-beszel;
+                proxy_set_header   Host $http_host;
+                proxy_set_header   X-Forwarded-For $remote_addr;
+                proxy_set_header   X-Forwarded-Host $server_name;
+	}
+
+    listen [::]:443; # manually changed
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/nonsequitarian.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/nonsequitarian.org/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+
+server {
+    include "includes/botfilter.inc";
+
+    if ($host = beszel.nonsequitarian.org) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 443 ssl; # managed by Certbot
+
+        server_name beszel.nonsequitarian.org;
+    listen 80;
+    return 404; # managed by Certbot
+}

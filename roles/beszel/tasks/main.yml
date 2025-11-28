@@ -1,0 +1,38 @@
+---
+- name: Import podsuid role
+  import_role:
+    name: podsuid
+
+- name: Copy beszel dir
+  ansible.builtin.copy:
+    src: beszel
+    dest: /home/pods
+
+- name: Create beszel/data dir
+  ansible.builtin.file:
+    path: /home/pods/beszel/beszel_data
+    state: directory
+    mode: 0755
+
+- name: Copy beszel.service file
+  ansible.builtin.copy:
+    src: beszel.service
+    dest: /home/pods/.config/systemd/user/beszel.service
+    mode: 0644
+
+- name: Enable beszel systemd service
+  ansible.builtin.systemd_service:
+    name: beszel.service
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Place beszel nginx config
+  become: true
+  become_user: root
+  ansible.builtin.copy:
+    src: beszel.nonsequitarian.org
+    dest: /etc/nginx/sites.d/beszel.nonsequitarian.org
+    mode: 0644
+  notify: Restart nginx service

@@ -70,6 +70,11 @@
       become_user: pods
       tags: forgejo
 
+    - role: beszel
+      become: true
+      become_user: pods
+      tags: beszel
+
     - role: loop-role
       vars:
         inner_role: hugo-sites
