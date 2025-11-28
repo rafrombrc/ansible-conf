@@ -86,7 +86,7 @@ server {
 		proxy_set_header   Connection "upgrade";
 
 		if ($request_method = 'OPTIONS') {
-			add_header 'Access-Control-Allow-Origin' 'https://ente.nonsequitarian.org';
+			add_header 'Access-Control-Allow-Origin' '*';
 			add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS';
 			add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,X-Client-Package,X-Auth-Token,X-Client-Version';
 		        add_header 'Access-Control-Max-Age' 1728000;
