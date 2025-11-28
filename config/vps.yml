@@ -9,6 +9,9 @@ host_packages:
   - bc
   - znc
 
+host_aur_packages:
+  - beszel-agent-bin
+
 podman_apps:
   - role_name: piwigo
     dir_name: piwigo

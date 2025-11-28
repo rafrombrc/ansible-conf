@@ -1,6 +1,6 @@
 services:
   beszel:
-    image: henrygd/beszel
+    image: docker.io/henrygd/beszel
     container_name: beszel
     restart: unless-stopped
     ports:
