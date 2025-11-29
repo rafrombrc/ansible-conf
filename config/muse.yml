@@ -4,6 +4,7 @@ host_packages:
 
 host_aur_packages:
   - firefox-nightly-bin
+  - beszel-agent-bin
 
 host_pkgbuild_packages:
   - zohomeeting

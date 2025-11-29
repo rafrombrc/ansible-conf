@@ -5,6 +5,7 @@ swapfile_size: 8G
 host_packages:
   - mopidy
   - python-pyaes
+  - tailscale
 
 host_aur_packages:
   - adduser
@@ -18,6 +19,7 @@ host_aur_packages:
   - python-ratelimit
   - python-uritools
   - snapcast
+  - beszel-agent-bin
 
 host_pkgbuild_packages:
   - python-mopidy-mobile
