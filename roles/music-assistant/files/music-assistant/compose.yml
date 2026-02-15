@@ -5,6 +5,8 @@ services:
     restart: unless-stopped
     # Network mode must be set to host for MA to work correctly
     network_mode: host
+    dns:
+      - 10.0.1.1
     volumes:
       - ./music-assistant/data:/data/
       - /srv/music:/music
