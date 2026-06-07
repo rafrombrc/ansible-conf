@@ -75,6 +75,11 @@
       become_user: pods
       tags: beszel
 
+    - role: vaultwarden
+      become: true
+      become_user: pods
+      tags: vaultwarden
+
     - role: loop-role
       vars:
         inner_role: hugo-sites

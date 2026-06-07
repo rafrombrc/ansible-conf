@@ -21,6 +21,8 @@ podman_apps:
     dir_name: my-ente
   - role_name: searxng
     dir_name: searxng-docker
+  - role_name: vaultwarden
+    dir_name: vaultwarden
 
 hugo_sites:
   - dir_name: accompaniment

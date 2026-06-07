@@ -1,0 +1,42 @@
+---
+- name: Import podsuid role
+  import_role:
+    name: podsuid
+
+- name: Create vaultwarden compose folder
+  ansible.builtin.file:
+    path: /home/pods/vaultwarden
+    state: directory
+
+- name: Template vaultwarden compose.yaml file
+  ansible.builtin.template:
+    src: compose.yaml.j2
+    dest: /home/pods/vaultwarden/compose.yaml
+    mode: 0600
+  notify: Restart vaultwarden systemd service
+
+- name: Copy vaultwarden.service file
+  ansible.builtin.copy:
+    src: vaultwarden.service
+    dest: /home/pods/.config/systemd/user/vaultwarden.service
+    mode: 0644
+  notify:
+    - Reload pods user systemd config
+    - Restart vaultwarden systemd service
+
+- name: Enable vaultwarden systemd service
+  ansible.builtin.systemd_service:
+    name: vaultwarden.service
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Place vaultwarden nginx config
+  become: true
+  become_user: root
+  ansible.builtin.copy:
+    src: vault.nonsequitarian.org
+    dest: /etc/nginx/sites.d/vault.nonsequitarian.org
+    mode: 0644
+  notify: Restart nginx service
