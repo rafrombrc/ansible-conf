@@ -9,6 +9,11 @@
     dest: /home/pods
   notify: Restart immich systemd service
 
+- name: Create immich/pg_dump folder
+  ansible.builtin.file:
+    path: /home/pods/immich/pg_dump
+    state: directory
+
 - name: Template immich .env file
   ansible.builtin.template:
     src: env.j2
@@ -24,9 +29,33 @@
     - Reload pods user systemd config
     - Restart immich systemd service
 
+- name: Copy pg-backup-immich.timer file
+  ansible.builtin.copy:
+    src: pg-backup-immich.timer
+    dest: /home/pods/.config/systemd/user/pg-backup-immich.timer
+    mode: 0644
+  notify:
+    - Reload pods user systemd config
+    - Restart pg-backup-immich systemd timer
+
+- name: Copy pg-backup-immich.service file
+  ansible.builtin.copy:
+    src: pg-backup-immich.service
+    dest: /home/pods/.config/systemd/user/pg-backup-immich.service
+    mode: 0644
+  notify: Reload pods user systemd config
+
 - name: Enable immich systemd service
   ansible.builtin.systemd_service:
     name: immich.service
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Enable pg-backup-immich.timer systemd timer
+  ansible.builtin.systemd_service:
+    name: pg-backup-immich.timer
     enabled: true
     scope: user
   environment:

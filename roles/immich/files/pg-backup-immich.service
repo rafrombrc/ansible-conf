@@ -1,0 +1,8 @@
+[Unit]
+Description=PostgreSQL Backup for immich
+Requires=immich.service
+
+[Service]
+ExecStart=/usr/bin/sh -c "podman exec immich_postgres pg_dump -U postgres immich | gzip > %h/immich/pg_dump/immich_db-$(date +%%Y%%m%%d).sql.gz"
+ExecStartPost=find %h/immich/pg_dump -type f -mtime +10 -exec rm {} \;
+Type=oneshot
