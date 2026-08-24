@@ -1,9 +1,6 @@
 services:
   museum:
-    build:
-      dockerfile_inline: |
-        FROM ghcr.io/ente-io/server
-        RUN apk add curl
+    image: ghcr.io/ente/server
     ports:
       - 9080:8080 # API
     depends_on:
@@ -13,13 +10,16 @@ services:
       - ./museum.yaml:/museum.yaml:ro
       - ./data:/data:ro
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8080/ping"]
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/ping"]
       interval: 60s
       timeout: 5s
       retries: 3
-      start_period: 5s
+      start_period: 120s
     environment:
       GIN_MODE: release
+    networks:
+      static-network:
+        ipv4_address: 10.90.0.3
     extra_hosts:
       - "minio.nonsequitarian.org:169.254.1.2"
 
@@ -31,7 +31,7 @@ services:
   #  command: "TCP-LISTEN:3200,fork,reuseaddr TCP:minio:3200"
 
   web:
-    image: ghcr.io/ente-io/web
+    image: ghcr.io/ente/web
     # Uncomment what you need to tweak.
     ports:
       - 3000:3000 # Photos web app
@@ -42,7 +42,10 @@ services:
     # Modify these values to your custom subdomains, if using any
     environment:
       ENTE_API_ORIGIN: https://ente-api.nonsequitarian.org
-      ENTE_ALBUMS_ORIGIN: https://ente-albums.nonsequitarian.org
+      #ENTE_ALBUMS_ORIGIN: https://ente-albums.nonsequitarian.org
+    networks:
+      static-network:
+        ipv4_address: 10.90.0.4
 
   postgres:
     image: docker.io/postgres:15
@@ -56,6 +59,9 @@ services:
       start_interval: 1s
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    networks:
+      static-network:
+        ipv4_address: 10.90.0.5
 
   minio:
     image: registry.hub.docker.com/minio/minio
@@ -87,7 +93,16 @@ services:
           mc mb -p wasabi-eu-central-2-v3
           mc mb -p scw-eu-fr-v3
           '
+    networks:
+      static-network:
+        ipv4_address: 10.90.0.6
 
+
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 10.90.0.0/16
 volumes:
   postgres-data:
   minio-data:
