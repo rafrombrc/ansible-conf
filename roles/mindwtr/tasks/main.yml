@@ -1,0 +1,42 @@
+---
+- name: Import podsuid role
+  import_role:
+    name: podsuid
+
+- name: Create mindwtr compose folder
+  ansible.builtin.file:
+    path: /home/pods/mindwtr
+    state: directory
+
+- name: Template mindwtr compose.yaml file
+  ansible.builtin.template:
+    src: compose.yaml.j2
+    dest: /home/pods/mindwtr/compose.yaml
+    mode: 0600
+  notify: Restart mindwtr systemd service
+
+- name: Copy mindwtr.service file
+  ansible.builtin.copy:
+    src: mindwtr.service
+    dest: /home/pods/.config/systemd/user/mindwtr.service
+    mode: 0644
+  notify:
+    - Reload pods user systemd config
+    - Restart mindwtr systemd service
+
+- name: Enable mindwtr systemd service
+  ansible.builtin.systemd_service:
+    name: mindwtr.service
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ podsuid }}"
+
+- name: Place mindwtr nginx config
+  become: true
+  become_user: root
+  ansible.builtin.copy:
+    src: mindwtr.nonsequitarian.org
+    dest: /etc/nginx/sites.d/mindwtr.nonsequitarian.org
+    mode: 0644
+  notify: Restart nginx service

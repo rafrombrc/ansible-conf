@@ -80,6 +80,11 @@
       become_user: pods
       tags: vaultwarden
 
+    - role: mindwtr
+      become: true
+      become_user: pods
+      tags: mindwtr
+
     - role: loop-role
       vars:
         inner_role: hugo-sites
