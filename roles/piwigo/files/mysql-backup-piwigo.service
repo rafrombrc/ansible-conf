@@ -1,0 +1,8 @@
+[Unit]
+Description=MySQL Backup for piwigo
+Requires=piwigo.service
+
+[Service]
+ExecStart=/usr/bin/sh -c "podman exec onloc_db pg_dump -U onloc onloc | gzip > %h/onloc/pg_dump/onloc_db-$(date +%%Y%%m%%d).sql.gz"
+ExecStartPost=find %h/onloc/pg_dump -type f -mtime +10 -exec rm {} \;
+Type=oneshot
