@@ -64,7 +64,7 @@ services:
         ipv4_address: 10.90.0.5
 
   minio:
-    image: registry.hub.docker.com/minio/minio
+    image: docker.io/pgsty/silo:latest
     ports:
       - 3200:3200 # MinIO API
       # Uncomment to enable MinIO Web UI
